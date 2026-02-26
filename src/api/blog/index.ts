@@ -6,3 +6,8 @@ export function getLatestBlogList(num: number = 4): Promise<any> {
     num,
   });
 }
+
+// 获取所有博客的总数
+export function getTotalBlogCount(): Promise<any> {
+  return getRequest("/miniapp/blog/getBlogCount", {});
+}
