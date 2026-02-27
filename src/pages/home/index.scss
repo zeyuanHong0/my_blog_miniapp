@@ -1,9 +1,49 @@
 .page {
-    width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
     background: #fafafa;
     padding: 40rpx;
-    overflow-y: auto;
+}
+
+.small-card {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100rpx;
+    z-index: 999;
+
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+
+    .small-card-content {
+        display: flex;
+        align-items: center;
+        gap: 20rpx;
+        height: 100%;
+        padding: 0 30rpx;
+    }
+
+    .small-avatar {
+        width: 60rpx;
+        height: 60rpx;
+        border-radius: 50%;
+        border: 2rpx solid #fff;
+        box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.1);
+    }
+
+    .small-name {
+        font-size: 32rpx;
+        font-weight: 600;
+        color: #333;
+        letter-spacing: 2rpx;
+    }
 }
 
 .flip-card-container {
@@ -195,46 +235,6 @@
 .article-container {
     width: 100%;
     margin-top: 40rpx;
-    display: flex;
-    flex-direction: column;
-    gap: 20rpx;
-
-    .article-card {
-        padding: 40rpx;
-        border-radius: 32rpx;
-        background: #fff;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
-        border: 2rpx solid rgba(0, 0, 0, 0.02);
-        .title {
-            font-size: 34rpx;
-            font-weight: 600;
-            color: #1a1a1a;
-            margin-bottom: 16rpx;
-            line-height: 1.4;
-        }
-        .description {
-            font-size: 28rpx;
-            color: #666666;
-            line-height: 1.6;
-            margin-bottom: 24rpx;
-        }
-        .footer {
-            display: flex;
-            align-items: center;
-            gap: 20rpx;
-            font-size: 24rpx;
-            .time {
-                color: #999999;
-            }
-            .tag {
-                color: #1a1a1a;
-                background: #f0f0f0;
-                padding: 8rpx 16rpx;
-                border-radius: 12rpx;
-                font-weight: 500;
-            }
-        }
-    }
 }
 
 .more-btn {
