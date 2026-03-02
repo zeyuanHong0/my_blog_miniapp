@@ -1,6 +1,11 @@
 <template>
   <div class="article-list">
-    <view class="article-card" v-for="(blog, index) in blogList" :key="index">
+    <view
+      class="article-card"
+      v-for="(blog, index) in blogList"
+      :key="index"
+      @click="toBlogInfo(blog.id)"
+    >
       <!-- 标题 -->
       <view class="title truncate-2">{{ blog.title }}</view>
       <!-- 描述 -->
@@ -30,6 +35,7 @@ export default {
 import dayjs from "dayjs";
 
 interface Blog {
+  id: string;
   title: string;
   description: string;
   createTime: string;
@@ -39,6 +45,12 @@ interface Blog {
 defineProps<{
   blogList: Blog[];
 }>();
+
+const toBlogInfo = (id: string) => {
+  uni.navigateTo({
+    url: `/pages/blog-view/index?id=${id}`,
+  });
+};
 </script>
 
 <style lang="scss" scoped>

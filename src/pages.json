@@ -4,7 +4,8 @@
     {
       "path": "pages/home/index",
       "style": {
-        "navigationBarTitleText": "首页"
+        "navigationBarTitleText": "首页",
+        "enablePullDownRefresh": true
       }
     },
     {
@@ -23,6 +24,19 @@
       "path": "pages/my/index",
       "style": {
         "navigationBarTitleText": "关于"
+      }
+    },
+    {
+      "path": "pages/blogs/index",
+      "style": {
+        "navigationBarTitleText": "博客列表",
+        "enablePullDownRefresh": true
+      }
+    },
+    {
+      "path": "pages/blog-view/index",
+      "style": {
+        "navigationBarTitleText": "博客详情"
       }
     }
   ],

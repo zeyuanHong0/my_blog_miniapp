@@ -16,3 +16,8 @@ export function getTotalBlogCount(): Promise<any> {
 export function getAllBlogList(): Promise<any> {
   return getRequest("/miniapp/blog/getAllBlogList", {});
 }
+
+// 获取博客详情
+export function getBlogDetail(id: string): Promise<any> {
+  return getRequest(`/miniapp/blog/getBlogInfo/${id}`, {});
+}
