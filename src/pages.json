@@ -36,7 +36,12 @@
     {
       "path": "pages/blog-view/index",
       "style": {
-        "navigationBarTitleText": "博客详情"
+        "navigationBarTitleText": "博客详情",
+        "mp-weixin": {
+          "usingComponents": {
+            "towxml": "/static/towxml/towxml"
+          }
+        }
       }
     }
   ],
@@ -54,26 +59,26 @@
     "list": [
       {
         "pagePath": "pages/home/index",
-        "iconPath": "static/tabbar/home.png",
-        "selectedIconPath": "static/tabbar/home_active.png",
+        "iconPath": "static/image/tabbar_img/home.png",
+        "selectedIconPath": "static/image/tabbar_img/home_active.png",
         "text": "首页"
       },
       {
         "pagePath": "pages/categories/index",
-        "iconPath": "static/tabbar/category.png",
-        "selectedIconPath": "static/tabbar/category_active.png",
+        "iconPath": "static/image/tabbar_img/category.png",
+        "selectedIconPath": "static/image/tabbar_img/category_active.png",
         "text": "分类"
       },
       {
         "pagePath": "pages/tags/index",
-        "iconPath": "static/tabbar/tag.png",
-        "selectedIconPath": "static/tabbar/tag_active.png",
+        "iconPath": "static/image/tabbar_img/tag.png",
+        "selectedIconPath": "static/image/tabbar_img/tag_active.png",
         "text": "标签"
       },
       {
         "pagePath": "pages/my/index",
-        "iconPath": "static/tabbar/my.png",
-        "selectedIconPath": "static/tabbar/my_active.png",
+        "iconPath": "static/image/tabbar_img/my.png",
+        "selectedIconPath": "static/image/tabbar_img/my_active.png",
         "text": "关于"
       }
     ]
