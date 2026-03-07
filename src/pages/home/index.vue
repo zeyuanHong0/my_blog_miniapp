@@ -100,9 +100,9 @@ import { useLoading } from "@/hooks/useLoading";
 
 import Loading from "@/components/loading.vue";
 import ArticleList from "@/components/articleList.vue";
-import { start } from "node:repl";
 
 interface Blog {
+  id: string;
   title: string;
   description: string;
   createTime: string;

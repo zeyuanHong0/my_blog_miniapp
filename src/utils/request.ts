@@ -35,6 +35,7 @@ export function uniPromise(
             content: res.errMsg,
             showCancel: false,
           });
+          reject(res.data);
         } else {
           resolve(res.data);
         }

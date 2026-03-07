@@ -1,0 +1,129 @@
+.page {
+    min-height: 100vh;
+    padding: 20rpx 20rpx 160rpx 20rpx;
+}
+
+.header-container {
+    padding: 16rpx;
+}
+
+.title {
+    font-size: 48rpx;
+    font-weight: 600;
+    margin-bottom: 30rpx;
+}
+
+.description {
+    font-size: 30rpx;
+    color: #666;
+    margin-bottom: 30rpx;
+    line-height: 1.7;
+}
+
+.date {
+    font-size: 28rpx;
+    color: #999;
+    margin-bottom: 30rpx;
+}
+
+.ai-summary {
+    padding-left: 20rpx;
+    font-size: 28rpx;
+    font-style: italic;
+    color: #8e8d8d;
+    line-height: 1.7;
+    border-left: 4rpx solid #eee;
+
+    .summary-title {
+        margin-bottom: 10rpx;
+
+        .emoji {
+            margin-right: 10rpx;
+        }
+    }
+}
+
+.tags-container {
+    padding: 0 30rpx;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 26rpx;
+    margin-bottom: 30rpx;
+
+    .tag-item {
+        font-size: 22rpx;
+        color: #1a1a1a;
+        background: #f0f0f0;
+        padding: 6rpx 16rpx;
+        border-radius: 8rpx;
+        font-weight: 500;
+    }
+}
+
+.bottomBar {
+    width: 100vw;
+    height: 140rpx;
+    padding: 20rpx 70rpx;
+    background: #fff;
+    border-top: 1rpx solid #eee;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: 100rpx;
+    transition: transform 0.3s ease;
+    z-index: 1001;
+    &.hidden {
+        transform: translateY(100%);
+    }
+
+    .barItem {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8rpx;
+
+        .item-icon {
+            width: 48rpx;
+            height: 48rpx;
+        }
+        .item-name {
+            font-size: 26rpx;
+            color: #666;
+
+            &.active {
+                color: #000;
+            }
+        }
+    }
+}
+
+.overlay {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.menu-container {
+    width: 100%;
+    height: 100%;
+
+    .header {
+        min-height: 120rpx;
+        padding: 20rpx;
+        font-size: 32rpx;
+        font-weight: 500;
+        border-bottom: 2rpx solid #eee;
+    }
+
+    .content {
+        flex: 1;
+        padding: 20rpx;
+    }
+}
