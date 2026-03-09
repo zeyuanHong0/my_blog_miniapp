@@ -1,4 +1,5 @@
 <template>
+  <page-meta :page-style="showMenuPopup ? 'overflow: hidden;' : ''" />
   <view class="page">
     <Loading v-if="!show" />
     <view class="header-container">
@@ -77,7 +78,21 @@
       <view class="header">
         <text>{{ blogInfo?.title }}</text>
       </view>
-      <view class="content"></view>
+      <view class="content">
+        <view class="headings">
+          <view
+            class="heading-item"
+            v-for="(heading, index) in headings"
+            :key="index"
+            :style="{ 'padding-left': (heading.level - 1) * 20 + 'rpx' }"
+            @click="handleClickHeading(heading.id)"
+          >
+            <text class="heading-text">
+              {{ heading.text }}
+            </text>
+          </view>
+        </view>
+      </view>
     </view>
   </t-popup>
 </template>
@@ -89,13 +104,14 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref, nextTick } from "vue";
+import { ref, nextTick, getCurrentInstance } from "vue";
 import { onLoad, onPageScroll } from "@dcloudio/uni-app";
 import dayjs from "dayjs";
 import TPopup from "@tdesign/uniapp/popup/popup.vue";
 
 import { getBlogDetail } from "@/api/blog";
 import { useLoading } from "@/hooks/useLoading";
+import { extractHeadings } from "@/utils";
 
 import Loading from "@/components/loading.vue";
 
@@ -113,6 +129,8 @@ interface BlogInfo {
   tags: any[];
 }
 
+const instance = getCurrentInstance();
+
 const { startLoading, stopLoading } = useLoading(1000);
 const show = ref(false);
 
@@ -124,6 +142,8 @@ onLoad((options: any) => {
 });
 
 const blogInfo = ref<BlogInfo | null>(null);
+const headings = ref<any[] | undefined>([]);
+const headingTops = ref<number[]>([]);
 const handleGetBlogInfo = async (id: string) => {
   startLoading();
   try {
@@ -147,6 +167,7 @@ const handleGetBlogInfo = async (id: string) => {
       },
     });
 
+    // 给标题添加id属性，方便目录跳转
     show.value = true;
 
     // 等待组件挂载完成
@@ -155,6 +176,8 @@ const handleGetBlogInfo = async (id: string) => {
     const currentPage: any = pages[pages.length - 1];
     const comp = currentPage.selectComponent("#my-towxml");
     console.log("towxml node:", article);
+    // 处理目录(并且给标题添加id属性)
+    headings.value = extractHeadings(article?.children);
     if (comp) {
       comp.setData({ nodes: article });
     }
@@ -197,6 +220,29 @@ const handleClickItem = (index: number) => {
 };
 
 const showMenuPopup = ref(false);
+
+// 点击目录
+const handleClickHeading = (id: string) => {
+  console.log("点击了目录项，id:", id);
+  const query = uni.createSelectorQuery().in(instance?.proxy);
+  // const scopeId = instance?.type?.__scopeId?.replace("data-v-", "");
+  // console.log("🚀 ~ handleClickHeading ~ scopeId:", scopeId);
+
+  // const comp = query.select(`#${scopeId}——${id}`);
+  // console.log("🚀 ~ handleClickHeading ~ comp:", comp);
+  // comp
+  //   .boundingClientRect((rect: any) => {
+  //     console.log("🚀 ~ handleClickHeading ~ rect:", rect);
+  //     if (rect) {
+  //       showMenuPopup.value = false; // 先关闭目录弹窗
+  //       uni.pageScrollTo({
+  //         scrollTop: rect.top + rect.height / 2 - 100,
+  //         duration: 300,
+  //       });
+  //     }
+  //   })
+  //   .exec();
+};
 </script>
 
 <style lang="scss" scoped>
