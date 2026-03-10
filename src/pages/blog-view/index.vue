@@ -143,7 +143,6 @@ onLoad((options: any) => {
 
 const blogInfo = ref<BlogInfo | null>(null);
 const headings = ref<any[] | undefined>([]);
-const headingTops = ref<number[]>([]);
 const handleGetBlogInfo = async (id: string) => {
   startLoading();
   try {
@@ -175,7 +174,7 @@ const handleGetBlogInfo = async (id: string) => {
     const pages = getCurrentPages();
     const currentPage: any = pages[pages.length - 1];
     const comp = currentPage.selectComponent("#my-towxml");
-    console.log("towxml node:", article);
+    // console.log("towxml node:", article);
     // 处理目录(并且给标题添加id属性)
     headings.value = extractHeadings(article?.children);
     if (comp) {
@@ -223,25 +222,32 @@ const showMenuPopup = ref(false);
 
 // 点击目录
 const handleClickHeading = (id: string) => {
-  console.log("点击了目录项，id:", id);
-  const query = uni.createSelectorQuery().in(instance?.proxy);
-  // const scopeId = instance?.type?.__scopeId?.replace("data-v-", "");
-  // console.log("🚀 ~ handleClickHeading ~ scopeId:", scopeId);
+  // console.log("点击了目录项，id:", id);
+  const pages = getCurrentPages();
+  const currentPage: any = pages[pages.length - 1];
+  const towxmlComp = currentPage.selectComponent("#my-towxml");
 
-  // const comp = query.select(`#${scopeId}——${id}`);
-  // console.log("🚀 ~ handleClickHeading ~ comp:", comp);
-  // comp
-  //   .boundingClientRect((rect: any) => {
-  //     console.log("🚀 ~ handleClickHeading ~ rect:", rect);
-  //     if (rect) {
-  //       showMenuPopup.value = false; // 先关闭目录弹窗
-  //       uni.pageScrollTo({
-  //         scrollTop: rect.top + rect.height / 2 - 100,
-  //         duration: 300,
-  //       });
-  //     }
-  //   })
-  //   .exec();
+  if (towxmlComp) {
+    towxmlComp.getHeadings((rects: any) => {
+      // console.log("🚀 ~ handleClickHeading ~ rects:", rects);
+      const targetRect = rects.find((rect: any) => rect.id === id);
+      if (!targetRect) return;
+
+      uni
+        .createSelectorQuery()
+        .selectViewport()
+        .scrollOffset((viewportRect: any) => {
+          const scrollTop = viewportRect.scrollTop + targetRect.top;
+          showMenuPopup.value = false; // 先关闭目录弹窗
+          // console.log("🚀 ~ handleClickHeading ~ targetRect:", targetRect.top);
+          uni.pageScrollTo({
+            scrollTop,
+            duration: 300,
+          });
+        })
+        .exec();
+    });
+  }
 };
 </script>
 

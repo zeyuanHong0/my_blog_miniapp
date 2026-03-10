@@ -22,17 +22,14 @@ export const extractHeadings = (node: any) => {
     if (levelArr.includes(child?.attrs?.class)) {
       // 处理标题文本
       const text = extractTreeProperty(child, "children", "text").join("");
-      console.log("🚀 ~ extractHeadings ~ text:", text);
+      // console.log("🚀 ~ extractHeadings ~ text:", text);
       const level = levelArr.indexOf(child.attrs.class) + 1;
       headings.push({
         level,
         text,
         id: `${level}-${text}`,
       });
-      // child.attrs = child.attrs || {};
-      // child.attrs["data-id"] = `${level}-${text}`;
-      // child.attrs = child.attrs || {};
-      // child.attrs.data = `${level}-${text}`;
+      child.attrs.id = `${level}-${text}`;
     }
   });
   return headings;
