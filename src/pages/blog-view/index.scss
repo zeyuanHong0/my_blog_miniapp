@@ -130,6 +130,19 @@
         overflow: hidden;
     }
 
+    .no-headings {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding-top: 100rpx;
+
+        .emptyImg {
+            width: 500rpx;
+            height: 500rpx;
+        }
+    }
+
     .headings {
         height: 100%;
         overflow-y: auto;

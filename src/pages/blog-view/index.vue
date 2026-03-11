@@ -62,7 +62,7 @@
     <view
       class="overlay"
       v-if="showMenuPopup"
-      @click="showMenuPopup = false"
+      @click="handleClickOverlay"
     ></view>
   </view>
   <!-- 目录弹窗 -->
@@ -79,7 +79,7 @@
         <text>{{ blogInfo?.title }}</text>
       </view>
       <view class="content">
-        <view class="headings">
+        <view class="headings" v-if="headings?.length > 0">
           <view
             class="heading-item"
             v-for="(heading, index) in headings"
@@ -91,6 +91,10 @@
               {{ heading.text }}
             </text>
           </view>
+        </view>
+        <view class="no-headings" v-else>
+          <image class="emptyImg" src="@/static/image/common/empty.png" />
+          <text class="emptyText">暂无目录</text>
         </view>
       </view>
     </view>
@@ -142,7 +146,7 @@ onLoad((options: any) => {
 });
 
 const blogInfo = ref<BlogInfo | null>(null);
-const headings = ref<any[] | undefined>([]);
+const headings = ref<any[]>([]);
 const handleGetBlogInfo = async (id: string) => {
   startLoading();
   try {
@@ -239,6 +243,7 @@ const handleClickHeading = (id: string) => {
         .scrollOffset((viewportRect: any) => {
           const scrollTop = viewportRect.scrollTop + targetRect.top;
           showMenuPopup.value = false; // 先关闭目录弹窗
+          bottomBar_activeIndex.value = -1;
           // console.log("🚀 ~ handleClickHeading ~ targetRect:", targetRect.top);
           uni.pageScrollTo({
             scrollTop,
@@ -248,6 +253,12 @@ const handleClickHeading = (id: string) => {
         .exec();
     });
   }
+};
+
+// 点击遮罩层
+const handleClickOverlay = () => {
+  showMenuPopup.value = false;
+  bottomBar_activeIndex.value = -1;
 };
 </script>
 
