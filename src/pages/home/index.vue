@@ -9,7 +9,11 @@
       }"
     >
       <view class="small-card-content">
-        <image class="small-avatar" src="@/static/logo.png" mode="aspectFill" />
+        <image
+          class="small-avatar"
+          src="@/static/image/common/logo.png"
+          mode="aspectFill"
+        />
         <text class="small-name">哲理源</text>
       </view>
     </view>
@@ -27,7 +31,7 @@
         <view class="card-face card-front">
           <view class="avatar-wrapper">
             <view class="avatar">
-              <image src="@/static/logo.png" />
+              <image src="@/static/image/common/logo.png" />
             </view>
           </view>
           <view class="name">哲理源</view>
@@ -89,6 +93,7 @@ import {
   onShow,
   onPageScroll,
   onPullDownRefresh,
+  onTabItemTap,
 } from "@dcloudio/uni-app";
 import dayjs from "dayjs";
 
@@ -110,6 +115,10 @@ interface Blog {
 }
 
 const { showLoading, startLoading, stopLoading } = useLoading(1000);
+
+onTabItemTap(() => {
+  vibratePhone();
+});
 
 const scrollTop = ref(0);
 const smallCardOpacity = computed(() => {

@@ -1,7 +1,7 @@
 <template>
   <view class="loading-mask">
     <view class="loadingBox">
-      <image class="img" src="@/static/logo.png" alt="" />
+      <image class="img" src="@/static/image/common/logo.png" alt="" />
     </view>
   </view>
 </template>

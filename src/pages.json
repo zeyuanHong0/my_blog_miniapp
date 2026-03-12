@@ -9,13 +9,13 @@
       }
     },
     {
-      "path": "pages/categories/index",
+      "path": "pages/categories/list/index",
       "style": {
         "navigationBarTitleText": "分类"
       }
     },
     {
-      "path": "pages/tags/index",
+      "path": "pages/tags/list/index",
       "style": {
         "navigationBarTitleText": "标签"
       }
@@ -64,13 +64,13 @@
         "text": "首页"
       },
       {
-        "pagePath": "pages/categories/index",
+        "pagePath": "pages/categories/list/index",
         "iconPath": "static/image/tabbar_img/category.png",
         "selectedIconPath": "static/image/tabbar_img/category_active.png",
         "text": "分类"
       },
       {
-        "pagePath": "pages/tags/index",
+        "pagePath": "pages/tags/list/index",
         "iconPath": "static/image/tabbar_img/tag.png",
         "selectedIconPath": "static/image/tabbar_img/tag_active.png",
         "text": "标签"
