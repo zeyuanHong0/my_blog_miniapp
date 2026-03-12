@@ -4,3 +4,8 @@ import { getRequest } from "@/utils/request";
 export function getCategoryCount(): Promise<any> {
   return getRequest("/miniapp/category/getCategoryCount", {});
 }
+
+// 获取全部分类以及每个分类的文章数量
+export function getAllCategories(): Promise<any> {
+  return getRequest("/miniapp/category/getAllCategoryList", {});
+}

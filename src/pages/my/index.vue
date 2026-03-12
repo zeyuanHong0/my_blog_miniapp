@@ -1,17 +1,21 @@
 <template>
-  <div>
-    
-  </div>
+  <div></div>
 </template>
 
 <script lang="ts">
 export default {
-  name: ''
-}
+  name: "",
+};
 </script>
 
 <script setup lang="ts">
+import { onTabItemTap } from "@dcloudio/uni-app";
+
+import { vibratePhone } from "@/utils";
+
+onTabItemTap(() => {
+  vibratePhone();
+});
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>
