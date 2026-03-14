@@ -9,3 +9,8 @@ export function getCategoryCount(): Promise<any> {
 export function getAllCategories(): Promise<any> {
   return getRequest("/miniapp/category/getAllCategoryList", {});
 }
+
+// 获取分类详情
+export function getCategoryDetail(categoryId: string): Promise<any> {
+  return getRequest(`/miniapp/category/getCategoryInfo/${categoryId}`, {});
+}

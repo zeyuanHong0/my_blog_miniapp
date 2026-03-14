@@ -7,7 +7,12 @@
       >
     </view>
     <view class="list-container">
-      <view class="list-item" v-for="(item, index) in list" :key="index">
+      <view
+        class="list-item"
+        v-for="(item, index) in list"
+        :key="index"
+        @click="toInfo(item.id)"
+      >
         <view class="name">{{ item.name }}</view>
         <view class="count">{{ item.blogCount }} 篇</view>
       </view>
@@ -34,7 +39,6 @@ import { vibratePhone } from "@/utils";
 
 import Loading from "@/components/loading.vue";
 
-
 interface Category {
   id: string;
   name: string;
@@ -46,7 +50,6 @@ const { showLoading, startLoading, stopLoading } = useLoading();
 onTabItemTap(() => {
   vibratePhone();
 });
-
 
 const list = ref<Category[]>([]);
 const totalCount = computed(() =>
@@ -65,6 +68,12 @@ const handleGetAllCategoryList = async () => {
   } finally {
     stopLoading();
   }
+};
+
+const toInfo = (id: string) => {
+  uni.navigateTo({
+    url: `/pages/categories/info/index?id=${id}`,
+  });
 };
 </script>
 

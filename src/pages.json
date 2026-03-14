@@ -15,6 +15,12 @@
       }
     },
     {
+      "path": "pages/categories/info/index",
+      "style": {
+        "navigationBarTitleText": "详情"
+      }
+    },
+    {
       "path": "pages/tags/list/index",
       "style": {
         "navigationBarTitleText": "标签"
