@@ -1,7 +1,7 @@
 <template>
   <view class="page">
     <view class="header-container">
-      <view class="title">分类 | 前端开发</view>
+      <view class="title">分类 | {{ info.name }}</view>
     </view>
     <view class="list-container">
       <ArticleList :blogList="info.blogs" />
