@@ -70,7 +70,7 @@
     :visible="showMenuPopup"
     :placement="'bottom'"
     @update:visible="showMenuPopup = $event"
-    custom-style="border-radius: 0; height: 70%;"
+    custom-style="border-radius: 0; height: 70%;padding-bottom: 140rpx;"
     :show-overlay="false"
     z-index="1000"
   >
@@ -79,7 +79,7 @@
         <text>{{ blogInfo?.title }}</text>
       </view>
       <view class="content">
-        <view class="headings" v-if="headings?.length > 0">
+        <scroll-view class="headings" scroll-y v-if="headings?.length > 0">
           <view
             class="heading-item"
             v-for="(heading, index) in headings"
@@ -91,7 +91,7 @@
               {{ heading.text }}
             </text>
           </view>
-        </view>
+        </scroll-view>
         <view class="no-headings" v-else>
           <image class="emptyImg" src="@/static/image/common/empty.png" />
           <text class="emptyText">暂无目录</text>
@@ -180,7 +180,7 @@ const handleGetBlogInfo = async (id: string) => {
     const comp = currentPage.selectComponent("#my-towxml");
     // console.log("towxml node:", article);
     // 处理目录(并且给标题添加id属性)
-    headings.value = extractHeadings(article?.children);
+    headings.value = extractHeadings(article?.children)!;
     if (comp) {
       comp.setData({ nodes: article });
     }
