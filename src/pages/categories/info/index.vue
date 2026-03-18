@@ -6,6 +6,7 @@
     <view class="list-container">
       <ArticleList :blogList="info.blogs" />
     </view>
+    <view class="loading-more">-已加载全部-</view>
 
     <!-- loading -->
     <Loading v-if="showLoading" />
@@ -19,12 +20,11 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
-import { onShow, onTabItemTap, onLoad } from "@dcloudio/uni-app";
+import { ref } from "vue";
+import { onLoad } from "@dcloudio/uni-app";
 
 import { getCategoryDetail } from "@/api/category";
 import { useLoading } from "@/hooks/useLoading";
-import { vibratePhone } from "@/utils";
 
 import Loading from "@/components/loading.vue";
 import ArticleList from "@/components/articleList.vue";
@@ -39,10 +39,6 @@ onLoad((options: any) => {
     categoryId.value = id;
     handleGetCategoryDetail();
   }
-});
-
-onTabItemTap(() => {
-  vibratePhone();
 });
 
 const info = ref<any>({});
