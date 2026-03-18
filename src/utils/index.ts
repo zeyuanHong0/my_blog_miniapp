@@ -61,3 +61,19 @@ export const extractTreeProperty = (
   traverse(node);
   return result;
 };
+
+// 格式化 SVG 图标
+export const formatSvgIcon = (iconStr: string) => {
+  if (!iconStr) return '';
+  // 如果是网络地址格式或已经是 data URI 格式，直接返回
+  if (iconStr.startsWith('http') || iconStr.startsWith('data:')) {
+    return iconStr;
+  }
+  // 如果后端返回的是纯粹的 <svg>...</svg> 文本代码，需要转码
+  if (iconStr.includes('<svg')) {
+    // 过滤掉不可见字符并转码
+    const cleanSvg = iconStr.replace(/[\r\n\t]/g, '');
+    return `data:image/svg+xml;utf8,${encodeURIComponent(cleanSvg)}`;
+  }
+  return iconStr;
+};
