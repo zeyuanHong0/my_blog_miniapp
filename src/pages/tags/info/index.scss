@@ -1,0 +1,71 @@
+.page {
+    width: 100vw;
+    height: 100vh;
+    padding: 20rpx 40rpx 20rpx 40rpx;
+    background: #fafafa;
+}
+
+.header-container {
+    width: 100%;
+    margin-bottom: 60rpx;
+    .title {
+        font-size: 42rpx;
+        font-weight: 600;
+        color: #1a1a1a;
+        margin-bottom: 16rpx;
+        letter-spacing: 1rpx;
+    }
+    .desc {
+        font-size: 26rpx;
+        color: #999999;
+    }
+}
+
+.list-container {
+    width: 100%;
+    margin-top: 20rpx;
+    display: flex;
+    flex-direction: column;
+    gap: 20rpx;
+
+    .list-item {
+        background-color: #ffffff;
+        border-radius: 32rpx;
+        padding: 36rpx 40rpx;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.02);
+        border: 2rpx solid rgba(0, 0, 0, 0.02);
+        transition:
+            transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+            box-shadow 0.3s ease;
+
+        &:active {
+            transform: scale(0.96);
+            box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.02);
+        }
+
+        .name {
+            font-size: 32rpx;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .count {
+            font-size: 26rpx;
+            color: #999999;
+            background: #f5f5f5;
+            padding: 8rpx 20rpx;
+            border-radius: 40rpx;
+        }
+    }
+}
+
+.loading-more {
+    text-align: center;
+    font-size: 26rpx;
+    color: #b3b3b3;
+    padding: 30rpx 0 60rpx 0;
+    letter-spacing: 2rpx;
+}

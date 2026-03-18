@@ -17,13 +17,19 @@
     {
       "path": "pages/categories/info/index",
       "style": {
-        "navigationBarTitleText": "详情"
+        "navigationBarTitleText": "分类详情"
       }
     },
     {
       "path": "pages/tags/list/index",
       "style": {
         "navigationBarTitleText": "标签"
+      }
+    },
+    {
+      "path": "pages/tags/info/index",
+      "style": {
+        "navigationBarTitleText": "标签详情"
       }
     },
     {
