@@ -128,16 +128,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { onTabItemTap } from "@dcloudio/uni-app";
 
+import useBlogStatsStore from "@/store/blogStats";
 import { NICKNAME, GITHUB_PAGE, SLOGAN, EMAIL, WEB_URL } from "@/constans";
 import { vibratePhone } from "@/utils";
 
-const stats = ref([
-  { label: "文章", value: 42 },
-  { label: "分类", value: 8 },
-  { label: "标签", value: 24 },
+import { CountUp } from "countup.js";
+
+const blogStatsStore = useBlogStatsStore();
+
+const stats = computed(() => [
+  { label: "文章", value: blogStatsStore.blogCount },
+  { label: "分类", value: blogStatsStore.categoryCount },
+  { label: "标签", value: blogStatsStore.tagCount },
 ]);
 
 // 页面状态

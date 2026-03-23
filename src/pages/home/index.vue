@@ -45,15 +45,17 @@
           <view class="stats-title">博客统计</view>
           <view class="stats-grid">
             <view class="stat-item">
-              <view class="stat-number">{{ blogTotalCount }}</view>
+              <view class="stat-number">{{ blogStatsStore.blogCount }}</view>
               <view class="stat-label">篇文章</view>
             </view>
             <view class="stat-item">
-              <view class="stat-number">{{ tagTotalCount }}</view>
+              <view class="stat-number">{{ blogStatsStore.tagCount }}</view>
               <view class="stat-label">个标签</view>
             </view>
             <view class="stat-item">
-              <view class="stat-number">{{ categoryTotalCount }}</view>
+              <view class="stat-number">{{
+                blogStatsStore.categoryCount
+              }}</view>
               <view class="stat-label">个分类</view>
             </view>
           </view>
@@ -97,11 +99,10 @@ import {
 } from "@dcloudio/uni-app";
 import dayjs from "dayjs";
 
-import { getLatestBlogList, getTotalBlogCount } from "@/api/blog";
-import { getCategoryCount } from "@/api/category";
-import { getTagCount } from "@/api/tag";
+import { getLatestBlogList } from "@/api/blog";
 import { vibratePhone } from "@/utils";
 import { useLoading } from "@/hooks/useLoading";
+import useBlogStatsStore from "@/store/blogStats";
 
 import Loading from "@/components/loading.vue";
 import ArticleList from "@/components/articleList.vue";
@@ -113,6 +114,8 @@ interface Blog {
   createTime: string;
   tags: any[];
 }
+
+const blogStatsStore = useBlogStatsStore();
 
 const { showLoading, startLoading, stopLoading } = useLoading(1000);
 
@@ -167,9 +170,6 @@ const init = async () => {
   startLoading();
   try {
     await handleGetLatestBlogList();
-    await handleGetTotalBlogCount();
-    await handleGetCategoryCount();
-    await handleGetTagCount();
   } catch (error) {
     console.error("初始化数据失败:", error);
   } finally {
@@ -190,27 +190,6 @@ const handleGetLatestBlogList = async () => {
     ...blog,
     createTime: dayjs(blog.createTime).format("YYYY-MM-DD"),
   }));
-};
-
-// 博客总数量
-const blogTotalCount = ref<number>(0);
-const handleGetTotalBlogCount = async () => {
-  const res = await getTotalBlogCount();
-  blogTotalCount.value = res.data;
-};
-
-// 分类总数量
-const categoryTotalCount = ref<number>(0);
-const handleGetCategoryCount = async () => {
-  const res = await getCategoryCount();
-  categoryTotalCount.value = res.data;
-};
-
-// 标签总数量
-const tagTotalCount = ref<number>(0);
-const handleGetTagCount = async () => {
-  const res = await getTagCount();
-  tagTotalCount.value = res.data;
 };
 
 // 跳转到博客列表页
