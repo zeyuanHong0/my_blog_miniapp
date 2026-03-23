@@ -54,6 +54,7 @@
     "@dcloudio/uni-mp-xhs": "3.0.0-4080420251103001",
     "@dcloudio/uni-quickapp-webview": "3.0.0-4080420251103001",
     "@tdesign/uniapp": "^0.7.3",
+    "countup.js": "^2.10.0",
     "dayjs": "^1.11.19",
     "markdown-it": "^14.1.1",
     "pinia": "^2.1.7",
