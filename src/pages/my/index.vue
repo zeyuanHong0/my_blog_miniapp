@@ -15,8 +15,14 @@
 
     <!-- 博客数据统计 -->
     <view class="stats-card card-box">
-      <view class="stat-item" v-for="item in stats" :key="item.label">
-        <view class="value">{{ item.value }}</view>
+      <view class="stat-item" v-for="(item, index) in stats" :key="item.label">
+        <view class="value">
+          <CountTo
+            :endVal="item.value"
+            :auto="false"
+            :ref="(el) => (countRefs[index] = el)"
+          />
+        </view>
         <view class="label">{{ item.label }}</view>
       </view>
     </view>
@@ -129,13 +135,13 @@
 
 <script setup lang="ts">
 import { ref, onMounted, computed } from "vue";
-import { onTabItemTap } from "@dcloudio/uni-app";
+import { onTabItemTap, onShow } from "@dcloudio/uni-app";
 
 import useBlogStatsStore from "@/store/blogStats";
 import { NICKNAME, GITHUB_PAGE, SLOGAN, EMAIL, WEB_URL } from "@/constans";
 import { vibratePhone } from "@/utils";
 
-import { CountUp } from "countup.js";
+import CountTo from "@/components/count-to.vue";
 
 const blogStatsStore = useBlogStatsStore();
 
@@ -145,12 +151,20 @@ const stats = computed(() => [
   { label: "标签", value: blogStatsStore.tagCount },
 ]);
 
+const countRefs = ref<any[]>([]);
+
 // 页面状态
 const isDarkMode = ref(false);
 const cacheSize = ref("0 B");
 
 onMounted(() => {
   calculateCache();
+});
+
+onShow(() => {
+  countRefs.value.forEach((ref) => {
+    ref.startAnimation();
+  });
 });
 
 // 点击底部 Tab 触发震动反馈

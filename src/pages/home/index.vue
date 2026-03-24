@@ -44,27 +44,28 @@
         <view class="card-face card-back">
           <view class="stats-title">博客统计</view>
           <view class="stats-grid">
-            <view class="stat-item">
-              <view class="stat-number">{{ blogStatsStore.blogCount }}</view>
-              <view class="stat-label">篇文章</view>
-            </view>
-            <view class="stat-item">
-              <view class="stat-number">{{ blogStatsStore.tagCount }}</view>
-              <view class="stat-label">个标签</view>
-            </view>
-            <view class="stat-item">
-              <view class="stat-number">{{
-                blogStatsStore.categoryCount
-              }}</view>
-              <view class="stat-label">个分类</view>
+            <view
+              class="stat-item"
+              v-for="(item, index) in blogStats"
+              :key="index"
+            >
+              <view class="stat-number"
+                ><CountTo
+                  :endVal="item.value"
+                  :ref="(el) => (countRefs[index] = el)"
+                  :auto="false"
+              /></view>
+              <view class="stat-label">{{ item.label }}</view>
             </view>
           </view>
           <view class="divider"></view>
           <view class="interests">
-            <view class="interest-tag">Vue.js</view>
-            <view class="interest-tag">TypeScript</view>
-            <view class="interest-tag">React</view>
-            <view class="interest-tag">Node.js</view>
+            <view
+              class="interest-tag"
+              v-for="(item, index) in interestList"
+              :key="index"
+              >{{ item }}</view
+            >
           </view>
           <view class="tap-hint">再次点击翻回</view>
         </view>
@@ -106,6 +107,7 @@ import useBlogStatsStore from "@/store/blogStats";
 
 import Loading from "@/components/loading.vue";
 import ArticleList from "@/components/articleList.vue";
+import CountTo from "@/components/count-to.vue";
 
 interface Blog {
   id: string;
@@ -122,6 +124,14 @@ const { showLoading, startLoading, stopLoading } = useLoading(1000);
 onTabItemTap(() => {
   vibratePhone();
 });
+
+const countRefs = ref<any[]>([]);
+const interestList = ["Vue.js", "TypeScript", "React", "Node.js"];
+const blogStats = computed(() => [
+  { label: "篇文章", value: blogStatsStore.blogCount },
+  { label: "个标签", value: blogStatsStore.tagCount },
+  { label: "个分类", value: blogStatsStore.categoryCount },
+]);
 
 const scrollTop = ref(0);
 const smallCardOpacity = computed(() => {
@@ -160,6 +170,12 @@ const isFlipped = ref(false);
 const handleFlip = () => {
   vibratePhone();
   isFlipped.value = !isFlipped.value;
+  if (isFlipped.value) {
+    console.log(countRefs.value);
+    countRefs.value.forEach((ref) => {
+      ref.startAnimation();
+    });
+  }
 };
 
 onShow(() => {
