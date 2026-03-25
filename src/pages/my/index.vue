@@ -64,7 +64,7 @@
     <!-- 社交网络与关联链接卡片 -->
     <view class="list-card card-box">
       <!-- 网页端博客 -->
-      <view class="list-item" @click="copyText(WEB_URL, '博客链接已复制！')">
+      <view class="list-item" @click="showLinkModal = true">
         <view class="left-box">
           <image
             class="item-icon"
@@ -130,6 +130,29 @@
       <text class="copyright">© 2026 {{ NICKNAME }}</text>
       <text class="version">v1.0.0</text>
     </view>
+
+    <!-- 打开博客链接弹窗 -->
+    <view
+      v-if="showLinkModal"
+      class="modal-mask"
+      @click.self="showLinkModal = false"
+    >
+      <view class="modal-box">
+        <view class="modal-title">打开网页端博客</view>
+        <view class="modal-desc"
+          >微信限制无法直接跳转浏览器，请复制链接后手动打开</view
+        >
+        <view class="modal-url">
+          <text selectable>{{ WEB_URL }}</text>
+        </view>
+        <view class="modal-actions">
+          <view class="modal-btn cancel" @click="showLinkModal = false"
+            >取消</view
+          >
+          <view class="modal-btn confirm" @click="copyAndClose">复制链接</view>
+        </view>
+      </view>
+    </view>
   </view>
 </template>
 
@@ -156,15 +179,21 @@ const countRefs = ref<any[]>([]);
 // 页面状态
 const isDarkMode = ref(false);
 const cacheSize = ref("0 B");
+const showLinkModal = ref(false);
 
 onMounted(() => {
   calculateCache();
+  countRefs.value.forEach((ref) => {
+    ref?.startAnimation();
+  });
 });
 
 onShow(() => {
-  countRefs.value.forEach((ref) => {
-    ref.startAnimation();
-  });
+  if (countRefs.value.length > 0) {
+    countRefs.value.forEach((ref) => {
+      ref?.startAnimation();
+    });
+  }
 });
 
 // 点击底部 Tab 触发震动反馈
@@ -175,8 +204,12 @@ onTabItemTap(() => {
 // 切换深色模式
 const toggleDarkMode = (e: any) => {
   isDarkMode.value = e.detail.value;
+  // uni.showToast({
+  //   title: isDarkMode.value ? "已开启深色模式" : "已关闭深色模式",
+  //   icon: "none",
+  // });
   uni.showToast({
-    title: isDarkMode.value ? "已开启深色模式" : "已关闭深色模式",
+    title: "深色模式还在开发中，敬请期待！",
     icon: "none",
   });
 };
@@ -210,14 +243,18 @@ const clearCache = () => {
   });
 };
 
+// 复制博客链接并关闭弹窗
+const copyAndClose = () => {
+  copyText(WEB_URL, "链接已复制，请在浏览器中打开！");
+  showLinkModal.value = false;
+};
+
 // 复制文本到剪贴板
 const copyText = (text: string, msg: string) => {
   uni.setClipboardData({
     data: text,
     success: () => {
-      setTimeout(() => {
-        uni.showToast({ title: msg, icon: "none" });
-      }, 100);
+      uni.showToast({ title: msg, icon: "none" });
     },
   });
 };
@@ -371,6 +408,82 @@ const copyText = (text: string, msg: string) => {
   .version {
     color: #cccccc;
     font-size: 22rpx;
+  }
+}
+
+/* 链接弹窗 */
+.modal-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal-box {
+  width: 580rpx;
+  background-color: #ffffff;
+  border-radius: 24rpx;
+  padding: 48rpx 40rpx 36rpx;
+
+  .modal-title {
+    font-size: 34rpx;
+    font-weight: 600;
+    color: #333333;
+    text-align: center;
+    margin-bottom: 20rpx;
+  }
+
+  .modal-desc {
+    font-size: 26rpx;
+    color: #888888;
+    text-align: center;
+    line-height: 1.6;
+    margin-bottom: 32rpx;
+  }
+
+  .modal-url {
+    background-color: #f5f5f5;
+    border-radius: 12rpx;
+    padding: 20rpx 24rpx;
+    margin-bottom: 40rpx;
+    text-align: center;
+
+    text {
+      font-size: 26rpx;
+      color: #555555;
+      word-break: break-all;
+    }
+  }
+
+  .modal-actions {
+    display: flex;
+    gap: 20rpx;
+
+    .modal-btn {
+      flex: 1;
+      height: 80rpx;
+      border-radius: 40rpx;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30rpx;
+
+      &.cancel {
+        background-color: #f0f0f0;
+        color: #666666;
+      }
+
+      &.confirm {
+        background-color: #1a1a1a;
+        color: #ffffff;
+      }
+    }
   }
 }
 </style>
