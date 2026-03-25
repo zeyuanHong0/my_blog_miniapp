@@ -4,7 +4,7 @@
     <view class="profile-card">
       <image
         class="avatar"
-        src="/static/image/common/avatar.jpg"
+        src="https://www.zlyhub.com/images/avatar.jpg"
         mode="aspectFill"
       ></image>
       <view class="info">

@@ -93,7 +93,7 @@
           </view>
         </scroll-view>
         <view class="no-headings" v-else>
-          <image class="emptyImg" src="@/static/image/common/empty.png" />
+          <image class="emptyImg" src="https://www.zlyhub.com/images/empty.png" />
           <text class="emptyText">暂无目录</text>
         </view>
       </view>

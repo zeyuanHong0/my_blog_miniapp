@@ -142,6 +142,7 @@ const handleGetTagList = async () => {
 };
 
 const goToTagDetail = (tag: Tag) => {
+  vibratePhone();
   uni.navigateTo({
     url: `/pages/tags/info/index?id=${tag.id}`,
   });

@@ -71,6 +71,7 @@ const handleGetAllCategoryList = async () => {
 };
 
 const toInfo = (id: string) => {
+  vibratePhone();
   uni.navigateTo({
     url: `/pages/categories/info/index?id=${id}`,
   });

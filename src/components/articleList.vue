@@ -34,6 +34,8 @@ export default {
 <script setup lang="ts">
 import dayjs from "dayjs";
 
+import { vibratePhone } from "@/utils";
+
 interface Blog {
   id: string;
   title: string;
@@ -47,6 +49,7 @@ defineProps<{
 }>();
 
 const toBlogInfo = (id: string) => {
+  vibratePhone();
   uni.navigateTo({
     url: `/pages/blog-view/index?id=${id}`,
   });
