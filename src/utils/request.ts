@@ -24,7 +24,7 @@ export function uniPromise(
       method: method,
       data: data,
       header: {
-        "Content-type": header,
+        "Content-Type": header,
         "cache-control": "no-cache",
       },
       async success(res: any) {
@@ -59,4 +59,8 @@ export function getRequest(url: string, data: any): Promise<any> {
     data,
     "application/x-www-form-urlencoded;charset=utf8",
   );
+}
+
+export function postRequest(url: string, data: any): Promise<any> {
+  return uniPromise("POST", `${baseUrl}${url}`, data, "application/json");
 }
