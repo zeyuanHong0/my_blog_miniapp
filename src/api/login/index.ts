@@ -23,7 +23,7 @@ export const getWxCode = () => {
 export const handleLogin = async (code: string) => {
   try {
     const res = await postRequest("/miniapp/login", { code });
-    console.log("登录成功:", res);
+    uni.setStorageSync("openid", res.data?.openid);
   } catch (error) {
     console.error("登录失败:", error);
   }

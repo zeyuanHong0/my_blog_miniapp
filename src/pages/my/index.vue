@@ -8,8 +8,11 @@
         mode="aspectFill"
       ></image>
       <view class="info">
-        <view class="name">{{ NICKNAME }}</view>
-        <view class="slogan">{{ SLOGAN }}</view>
+        <view class="name">
+          {{ NICKNAME }}
+          <text :class="['status-dot', isOnline ? 'online' : 'offline']"></text>
+        </view>
+        <view class="slogan">{{ statusDesc || SLOGAN }}</view>
       </view>
     </view>
 
@@ -29,6 +32,19 @@
 
     <!-- 常用设置卡片 -->
     <view class="list-card card-box">
+      <view class="list-item" @click="showStatusModal = true" v-if="canISee">
+        <text class="item-title">状态管理</text>
+        <view class="right-box">
+          <text class="item-value"
+            >{{ isOnline ? "在线" : "离线" }} · {{ statusText || "默认" }}</text
+          >
+          <image
+            class="arrow"
+            src="@/static/image/common/icon_right_arrow.png"
+            mode="aspectFit"
+          />
+        </view>
+      </view>
       <view class="list-item">
         <text class="item-title">深色模式</text>
         <switch
@@ -135,9 +151,9 @@
     <view
       v-if="showLinkModal"
       class="modal-mask"
-      @click.self="showLinkModal = false"
+      @click="showLinkModal = false"
     >
-      <view class="modal-box">
+      <view class="modal-box" @click.stop>
         <view class="modal-title">打开网页端博客</view>
         <view class="modal-desc"
           >微信限制无法直接跳转浏览器，请复制链接后手动打开</view
@@ -150,6 +166,51 @@
             >取消</view
           >
           <view class="modal-btn confirm" @click="copyAndClose">复制链接</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 状态管理弹窗 -->
+    <view
+      v-if="showStatusModal"
+      class="modal-mask"
+      @click="showStatusModal = false"
+    >
+      <view class="modal-box" @click.stop>
+        <view class="modal-title">状态管理</view>
+        <view class="form-item">
+          <text class="form-label">在线状态</text>
+          <switch
+            :checked="isOnline"
+            @change="handleStatusChange"
+            color="#1a1a1a"
+            style="transform: scale(0.8)"
+          />
+        </view>
+        <view class="form-item">
+          <text class="form-label">具体状态</text>
+          <input
+            class="form-input"
+            v-model="statusText"
+            placeholder="例如: 工作中, 睡觉中"
+            maxlength="10"
+          />
+        </view>
+        <view class="form-item">
+          <text class="form-label">状态描述</text>
+          <textarea
+            auto-height
+            class="form-textarea"
+            v-model="statusDesc"
+            placeholder="写一句简短的描述..."
+            maxlength="50"
+          />
+        </view>
+        <view class="modal-actions">
+          <view class="modal-btn cancel" @click="showStatusModal = false"
+            >取消</view
+          >
+          <view class="modal-btn confirm" @click="saveStatus">保存</view>
         </view>
       </view>
     </view>
@@ -258,6 +319,22 @@ const copyText = (text: string, msg: string) => {
     },
   });
 };
+
+// 状态管理功能
+const canISee = ref(false);
+const showStatusModal = ref(false);
+const isOnline = ref(true);
+const statusText = ref("");
+const statusDesc = ref("");
+
+const saveStatus = () => {
+  uni.showToast({ title: "状态已保存", icon: "success" });
+  showStatusModal.value = false;
+};
+
+const handleStatusChange = (e: any) => {
+  isOnline.value = e.detail.value;
+};
 </script>
 
 <style lang="scss" scoped>
@@ -302,6 +379,23 @@ const copyText = (text: string, msg: string) => {
       font-weight: 600;
       color: #333333;
       margin-bottom: 12rpx;
+      display: flex;
+      align-items: center;
+
+      .status-dot {
+        width: 16rpx;
+        height: 16rpx;
+        border-radius: 50%;
+        margin-left: 16rpx;
+
+        &.online {
+          background-color: #52c41a;
+          box-shadow: 0 0 8rpx rgba(82, 196, 26, 0.5);
+        }
+        &.offline {
+          background-color: #bfbfbf;
+        }
+      }
     }
     .slogan {
       font-size: 26rpx;
@@ -483,6 +577,39 @@ const copyText = (text: string, msg: string) => {
         background-color: #1a1a1a;
         color: #ffffff;
       }
+    }
+  }
+
+  .form-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30rpx;
+
+    .form-label {
+      width: 140rpx;
+      font-size: 28rpx;
+      color: #333333;
+    }
+
+    .form-input {
+      flex: 1;
+      height: 64rpx;
+      background-color: #f5f5f5;
+      border-radius: 12rpx;
+      padding: 0 20rpx;
+      font-size: 28rpx;
+      color: #333333;
+    }
+
+    .form-textarea {
+      flex: 1;
+      min-height: 64rpx;
+      background-color: #f5f5f5;
+      border-radius: 12rpx;
+      padding: 16rpx 20rpx;
+      font-size: 28rpx;
+      color: #333333;
+      line-height: 1.4;
     }
   }
 }
