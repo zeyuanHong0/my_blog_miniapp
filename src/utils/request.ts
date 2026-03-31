@@ -1,3 +1,5 @@
+import useUserStore from "@/store/user";
+
 const is_dev = true; // 是否开发环境
 const baseUrl = is_dev
   ? "http://127.0.0.1:3000/api" // 开发环境使用本地服务器地址
@@ -16,16 +18,22 @@ export function uniPromise(
     | undefined,
   url: string,
   data: any,
-  header: any,
+  contentType: any,
 ): Promise<any> {
+  const userStore = useUserStore();
+  let token: string = "";
+  if (userStore.token) {
+    token = `Bearer ${userStore.token}`;
+  }
   return new Promise(function (resolve, reject) {
     uni.request({
       url: url,
       method: method,
       data: data,
       header: {
-        "Content-Type": header,
+        "Content-Type": contentType,
         "cache-control": "no-cache",
+        Authorization: token,
       },
       async success(res: any) {
         // 请求失败

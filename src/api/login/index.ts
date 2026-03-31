@@ -1,7 +1,6 @@
 import { postRequest } from "@/utils/request";
 
-// 获取微信登录的 code
-export const getWxCode = () => {
+export const getWxCode = (): Promise<string> => {
   return new Promise((resolve, reject) => {
     uni.login({
       provider: "weixin",
@@ -19,12 +18,6 @@ export const getWxCode = () => {
   });
 };
 
-// 登录
-export const handleLogin = async (code: string) => {
-  try {
-    const res = await postRequest("/miniapp/login", { code });
-    uni.setStorageSync("openid", res.data?.openid);
-  } catch (error) {
-    console.error("登录失败:", error);
-  }
+export const loginByCode = (code: string) => {
+  return postRequest("/miniapp/login", { code });
 };

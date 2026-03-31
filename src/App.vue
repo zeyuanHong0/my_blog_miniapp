@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onLaunch, onShow, onHide } from "@dcloudio/uni-app";
 import useBlogStatsStore from "@/store/blogStats";
-import { getWxCode, handleLogin } from "@/api/login";
+import useUserStore from "@/store/user";
 
 onLaunch(async () => {
   console.log("App Launch");
@@ -9,8 +9,8 @@ onLaunch(async () => {
   const blogStatsStore = useBlogStatsStore();
   blogStatsStore.getBlogStats();
 
-  const code = await getWxCode();
-  await handleLogin(code as string);
+  const userStore = useUserStore();
+  await userStore.login();
 });
 onShow(() => {
   console.log("App Show");
