@@ -224,6 +224,7 @@ import { onTabItemTap, onShow } from "@dcloudio/uni-app";
 import useBlogStatsStore from "@/store/blogStats";
 import { NICKNAME, GITHUB_PAGE, SLOGAN, EMAIL, WEB_URL } from "@/constans";
 import { vibratePhone } from "@/utils";
+import { changeStatus } from "@/api/status";
 
 import CountTo from "@/components/count-to.vue";
 
@@ -321,15 +322,24 @@ const copyText = (text: string, msg: string) => {
 };
 
 // 状态管理功能
-const canISee = ref(false);
+const canISee = ref(true);
 const showStatusModal = ref(false);
 const isOnline = ref(true);
 const statusText = ref("");
 const statusDesc = ref("");
 
-const saveStatus = () => {
-  uni.showToast({ title: "状态已保存", icon: "success" });
-  showStatusModal.value = false;
+const saveStatus = async () => {
+  try {
+    await changeStatus({
+      is_online: isOnline.value ? 1 : 0,
+      status_text: statusText.value,
+      status_desc: statusDesc.value,
+    });
+    uni.showToast({ title: "状态已保存", icon: "success" });
+    showStatusModal.value = false;
+  } catch (error) {
+    uni.showToast({ title: "保存状态失败，请稍后再试", icon: "none" });
+  }
 };
 
 const handleStatusChange = (e: any) => {
