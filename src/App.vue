@@ -11,6 +11,7 @@ onLaunch(async () => {
 
   const userStore = useUserStore();
   await userStore.login();
+  userStore.fetchStatus();
 });
 onShow(() => {
   console.log("App Show");

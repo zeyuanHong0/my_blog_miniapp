@@ -10,9 +10,9 @@
       <view class="info">
         <view class="name">
           {{ NICKNAME }}
-          <text :class="['status-dot', isOnline ? 'online' : 'offline']"></text>
+          <text :class="['status-dot', statusInfo.is_online ? 'online' : 'offline']"></text>
         </view>
-        <view class="slogan">{{ statusDesc || SLOGAN }}</view>
+        <view class="slogan">{{ statusInfo.status_desc || SLOGAN }}</view>
       </view>
     </view>
 
@@ -36,7 +36,7 @@
         <text class="item-title">状态管理</text>
         <view class="right-box">
           <text class="item-value"
-            >{{ isOnline ? "在线" : "离线" }} · {{ statusText || "默认" }}</text
+            >{{ statusInfo.is_online ? "在线" : "离线" }} · {{ statusInfo.status_text || "默认" }}</text
           >
           <image
             class="arrow"
@@ -181,7 +181,7 @@
         <view class="form-item">
           <text class="form-label">在线状态</text>
           <switch
-            :checked="isOnline"
+            :checked="statusInfo.is_online"
             @change="handleStatusChange"
             color="#1a1a1a"
             style="transform: scale(0.8)"
@@ -191,7 +191,7 @@
           <text class="form-label">具体状态</text>
           <input
             class="form-input"
-            v-model="statusText"
+            v-model="statusInfo.status_text"
             placeholder="例如: 工作中, 睡觉中"
             maxlength="10"
           />
@@ -201,7 +201,7 @@
           <textarea
             auto-height
             class="form-textarea"
-            v-model="statusDesc"
+            v-model="statusInfo.status_desc"
             placeholder="写一句简短的描述..."
             maxlength="50"
           />
@@ -222,6 +222,8 @@ import { ref, onMounted, computed } from "vue";
 import { onTabItemTap, onShow } from "@dcloudio/uni-app";
 
 import useBlogStatsStore from "@/store/blogStats";
+import useUserStore from "@/store/user";
+import { storeToRefs } from "pinia";
 import { NICKNAME, GITHUB_PAGE, SLOGAN, EMAIL, WEB_URL } from "@/constans";
 import { vibratePhone } from "@/utils";
 import { changeStatus } from "@/api/status";
@@ -229,6 +231,7 @@ import { changeStatus } from "@/api/status";
 import CountTo from "@/components/count-to.vue";
 
 const blogStatsStore = useBlogStatsStore();
+const userStore = useUserStore();
 
 const stats = computed(() => [
   { label: "文章", value: blogStatsStore.blogCount },
@@ -324,16 +327,14 @@ const copyText = (text: string, msg: string) => {
 // 状态管理功能
 const canISee = ref(true);
 const showStatusModal = ref(false);
-const isOnline = ref(true);
-const statusText = ref("");
-const statusDesc = ref("");
+const { statusInfo } = storeToRefs(userStore);
 
 const saveStatus = async () => {
   try {
     await changeStatus({
-      is_online: isOnline.value ? 1 : 0,
-      status_text: statusText.value,
-      status_desc: statusDesc.value,
+      is_online: statusInfo.value.is_online ? 1 : 0,
+      status_text: statusInfo.value.status_text,
+      status_desc: statusInfo.value.status_desc,
     });
     uni.showToast({ title: "状态已保存", icon: "success" });
     showStatusModal.value = false;
@@ -343,7 +344,7 @@ const saveStatus = async () => {
 };
 
 const handleStatusChange = (e: any) => {
-  isOnline.value = e.detail.value;
+  userStore.statusInfo.is_online = e.detail.value;
 };
 </script>
 
