@@ -1,4 +1,5 @@
 <template>
+  <page-meta :page-style="pageHidden ? 'overflow: hidden;' : ''" />
   <view :class="['my-container', { 'is-dark': isDarkMode }]">
     <!-- 个人资料卡片 -->
     <view class="profile-card">
@@ -10,7 +11,9 @@
       <view class="info">
         <view class="name">
           {{ NICKNAME }}
-          <text :class="['status-dot', statusInfo.is_online ? 'online' : 'offline']"></text>
+          <text
+            :class="['status-dot', statusInfo.is_online ? 'online' : 'offline']"
+          ></text>
         </view>
         <view class="slogan">{{ statusInfo.status_desc || SLOGAN }}</view>
       </view>
@@ -32,11 +35,16 @@
 
     <!-- 常用设置卡片 -->
     <view class="list-card card-box">
-      <view class="list-item" @click="showStatusModal = true" v-if="canISee">
+      <view
+        class="list-item"
+        @click="showStatusModal = true"
+        v-if="userStore.isAdmin"
+      >
         <text class="item-title">状态管理</text>
         <view class="right-box">
           <text class="item-value"
-            >{{ statusInfo.is_online ? "在线" : "离线" }} · {{ statusInfo.status_text || "默认" }}</text
+            >{{ statusInfo.is_online ? "在线" : "离线" }} ·
+            {{ statusInfo.status_text || "默认" }}</text
           >
           <image
             class="arrow"
@@ -233,6 +241,8 @@ import CountTo from "@/components/count-to.vue";
 const blogStatsStore = useBlogStatsStore();
 const userStore = useUserStore();
 
+const pageHidden = computed(() => showLinkModal.value || showStatusModal.value);
+
 const stats = computed(() => [
   { label: "文章", value: blogStatsStore.blogCount },
   { label: "分类", value: blogStatsStore.categoryCount },
@@ -325,7 +335,6 @@ const copyText = (text: string, msg: string) => {
 };
 
 // 状态管理功能
-const canISee = ref(true);
 const showStatusModal = ref(false);
 const { statusInfo } = storeToRefs(userStore);
 

@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { getWxCode, loginByCode } from "@/api/login";
+import { getWxCode, loginByCode, fetchIsUserAdmin } from "@/api/login";
 import { getStatus } from "@/api/status";
 
 const useUserStore = defineStore("user", {
@@ -10,6 +10,7 @@ const useUserStore = defineStore("user", {
       status_text: "",
       status_desc: "",
     },
+    isAdmin: false,
   }),
   actions: {
     async login() {
@@ -31,6 +32,14 @@ const useUserStore = defineStore("user", {
         };
       } catch (error) {
         console.error("获取状态失败:", error);
+      }
+    },
+    async checkAdmin() {
+      try {
+        const res = await fetchIsUserAdmin();
+        this.isAdmin = res.data?.isAdmin ?? false;
+      } catch (error) {
+        console.error("检查管理员权限失败:", error);
       }
     },
   },

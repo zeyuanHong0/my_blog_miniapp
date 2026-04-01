@@ -10,8 +10,11 @@ onLaunch(async () => {
   blogStatsStore.getBlogStats();
 
   const userStore = useUserStore();
-  await userStore.login();
-  userStore.fetchStatus();
+  await Promise.all([
+    blogStatsStore.getBlogStats(),
+    userStore.fetchStatus(),
+    userStore.login().then(() => userStore.checkAdmin()),
+  ]);
 });
 onShow(() => {
   console.log("App Show");

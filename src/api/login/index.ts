@@ -1,4 +1,4 @@
-import { postRequest } from "@/utils/request";
+import { getRequest, postRequest } from "@/utils/request";
 
 export const getWxCode = (): Promise<string> => {
   return new Promise((resolve, reject) => {
@@ -20,4 +20,8 @@ export const getWxCode = (): Promise<string> => {
 
 export const loginByCode = (code: string) => {
   return postRequest("/miniapp/login", { code });
+};
+
+export const fetchIsUserAdmin = () => {
+  return getRequest("/miniapp/isUserAdmin", {});
 };

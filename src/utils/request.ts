@@ -36,6 +36,7 @@ export function uniPromise(
         Authorization: token,
       },
       async success(res: any) {
+        console.log(res);
         // 请求失败
         if (res.statusCode !== 200) {
           uni.showModal({
