@@ -232,7 +232,7 @@ import { onTabItemTap, onShow } from "@dcloudio/uni-app";
 import useBlogStatsStore from "@/store/blogStats";
 import useUserStore from "@/store/user";
 import { storeToRefs } from "pinia";
-import { NICKNAME, GITHUB_PAGE, SLOGAN, EMAIL, WEB_URL } from "@/constans";
+import { NICKNAME, GITHUB_PAGE, SLOGAN, EMAIL, WEB_URL } from "@/constants";
 import { vibratePhone } from "@/utils";
 import { changeStatus } from "@/api/status";
 

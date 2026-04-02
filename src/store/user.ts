@@ -1,10 +1,16 @@
 import { defineStore } from "pinia";
-import { getWxCode, loginByCode, fetchIsUserAdmin } from "@/api/login";
+import {
+  getWxCode,
+  loginByCode,
+  fetchIsUserAdmin,
+  refreshToken,
+} from "@/api/login";
 import { getStatus } from "@/api/status";
 
 const useUserStore = defineStore("user", {
   state: () => ({
-    token: "",
+    access_token: "",
+    refresh_token: "",
     statusInfo: {
       is_online: false,
       status_text: "",
@@ -17,7 +23,8 @@ const useUserStore = defineStore("user", {
       try {
         const code = await getWxCode();
         const res = await loginByCode(code);
-        this.token = res.data?.token;
+        this.access_token = res.data?.access_token;
+        this.refresh_token = res.data?.refresh_token;
       } catch (error) {
         console.error("登录失败:", error);
       }
@@ -40,6 +47,14 @@ const useUserStore = defineStore("user", {
         this.isAdmin = res.data?.isAdmin ?? false;
       } catch (error) {
         console.error("检查管理员权限失败:", error);
+      }
+    },
+    async refreshToken() {
+      try {
+        const res = await refreshToken(this.refresh_token);
+        this.access_token = res.data?.access_token;
+      } catch (error) {
+        console.error("刷新 token 失败:", error);
       }
     },
   },

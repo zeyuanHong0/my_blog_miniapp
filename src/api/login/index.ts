@@ -25,3 +25,7 @@ export const loginByCode = (code: string) => {
 export const fetchIsUserAdmin = () => {
   return getRequest("/miniapp/isUserAdmin", {});
 };
+
+export const refreshToken = (refreshToken: string) => {
+  return postRequest("/miniapp/refresh", { refreshToken }, true);
+};

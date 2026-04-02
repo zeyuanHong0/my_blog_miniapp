@@ -7,13 +7,14 @@ onLaunch(async () => {
   console.log("App Launch");
   // 获取博客相关统计数据
   const blogStatsStore = useBlogStatsStore();
-  blogStatsStore.getBlogStats();
-
   const userStore = useUserStore();
   await Promise.all([
     blogStatsStore.getBlogStats(),
     userStore.fetchStatus(),
-    userStore.login().then(() => userStore.checkAdmin()),
+    (async () => {
+      await userStore.login();
+      await userStore.checkAdmin();
+    })(),
   ]);
 });
 onShow(() => {
