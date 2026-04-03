@@ -206,12 +206,11 @@
         </view>
         <view class="form-item">
           <text class="form-label">状态描述</text>
-          <textarea
-            auto-height
-            class="form-textarea"
+          <input
+            class="form-input"
             v-model="statusInfo.status_desc"
             placeholder="写一句简短的描述..."
-            maxlength="50"
+            maxlength="20"
           />
         </view>
         <view class="modal-actions">
@@ -619,17 +618,6 @@ const handleStatusChange = (e: any) => {
       padding: 0 20rpx;
       font-size: 28rpx;
       color: #333333;
-    }
-
-    .form-textarea {
-      flex: 1;
-      min-height: 64rpx;
-      background-color: #f5f5f5;
-      border-radius: 12rpx;
-      padding: 16rpx 20rpx;
-      font-size: 28rpx;
-      color: #333333;
-      line-height: 1.4;
     }
   }
 }
