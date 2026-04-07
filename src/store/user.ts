@@ -5,7 +5,7 @@ import {
   fetchIsUserAdmin,
   refreshToken,
 } from "@/api/login";
-import { getStatus } from "@/api/status";
+import { changeStatus, getStatus } from "@/api/status";
 
 const useUserStore = defineStore("user", {
   state: () => ({
@@ -40,6 +40,13 @@ const useUserStore = defineStore("user", {
       } catch (error) {
         console.error("获取状态失败:", error);
       }
+    },
+    async changeStatus(newStatus: {
+      is_online: boolean;
+      status_text: string;
+      status_desc: string;
+    }) {
+      this.statusInfo = newStatus;
     },
     async checkAdmin() {
       try {
