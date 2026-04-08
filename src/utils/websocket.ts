@@ -1,8 +1,4 @@
-const is_dev = true; // 是否开发环境
-
-const wsUrl = is_dev
-  ? "ws://127.0.0.1:3000" // 开发环境使用本地服务器地址
-  : "wss://www.zlyhub.com"; // 生产环境使用正式服务器地址
+const wsUrl = import.meta.env.VITE_APP_WS_URL;
 
 // 最大重连次数
 const MAX_RECONNECT_COUNT = 5;

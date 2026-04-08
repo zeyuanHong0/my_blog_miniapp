@@ -18,10 +18,7 @@ interface RequestConfig {
   _retryCount?: number; // 重试次数
 }
 
-const is_dev = true; // 是否开发环境
-const baseUrl = is_dev
-  ? "http://127.0.0.1:3000/api" // 开发环境使用本地服务器地址
-  : "https://www.zlyhub.com/api"; // 生产环境使用正式服务器地址
+const baseUrl = import.meta.env.VITE_APP_BASE_API;
 
 const MAX_RETRY = 1; // 最大重试次数
 let isRefreshing = false; // 是否正在刷新 token
@@ -49,7 +46,7 @@ export function uniPromise(config: RequestConfig): Promise<any> {
         Authorization: token,
       },
       success(res: any) {
-        console.log(res);
+        // console.log(res);
         // 请求失败
         if (res.statusCode !== 200) {
           const { code } = res.data;
