@@ -1,6 +1,6 @@
 <template>
   <page-meta :page-style="pageHidden ? 'overflow: hidden;' : ''" />
-  <view :class="['my-container', { 'is-dark': isDarkMode }]">
+  <view :class="['my-container', { 'is-dark': theme === 'dark' }]">
     <!-- 个人资料卡片 -->
     <view class="profile-card">
       <image
@@ -52,15 +52,6 @@
             mode="aspectFit"
           />
         </view>
-      </view>
-      <view class="list-item">
-        <text class="item-title">深色模式</text>
-        <switch
-          :checked="isDarkMode"
-          @change="toggleDarkMode"
-          color="#1a1a1a"
-          style="transform: scale(0.8)"
-        />
       </view>
       <view class="list-item" @click="clearCache">
         <text class="item-title">清除缓存</text>
@@ -230,6 +221,7 @@ import { onTabItemTap, onShow } from "@dcloudio/uni-app";
 
 import useBlogStatsStore from "@/store/blogStats";
 import useUserStore from "@/store/user";
+import useSettingsStore from "@/store/settings";
 import { storeToRefs } from "pinia";
 import { NICKNAME, GITHUB_PAGE, SLOGAN, EMAIL, WEB_URL } from "@/constants";
 import { vibratePhone } from "@/utils";
@@ -239,6 +231,8 @@ import CountTo from "@/components/count-to.vue";
 
 const blogStatsStore = useBlogStatsStore();
 const userStore = useUserStore();
+const settingsStore = useSettingsStore();
+const { theme } = storeToRefs(settingsStore);
 
 const pageHidden = computed(() => showLinkModal.value || showStatusModal.value);
 
@@ -274,19 +268,6 @@ onShow(() => {
 onTabItemTap(() => {
   vibratePhone();
 });
-
-// 切换深色模式
-const toggleDarkMode = (e: any) => {
-  isDarkMode.value = e.detail.value;
-  // uni.showToast({
-  //   title: isDarkMode.value ? "已开启深色模式" : "已关闭深色模式",
-  //   icon: "none",
-  // });
-  uni.showToast({
-    title: "深色模式还在开发中，敬请期待！",
-    icon: "none",
-  });
-};
 
 // 计算本地缓存大小
 const calculateCache = () => {
@@ -357,268 +338,5 @@ const handleStatusChange = (e: any) => {
 </script>
 
 <style lang="scss" scoped>
-.my-container {
-  min-height: 100vh;
-  background-color: #f7f8fa;
-  padding: 30rpx;
-  box-sizing: border-box;
-  transition: all 0.3s;
-}
-
-// 可复用的通用卡片样式
-.card-box {
-  background-color: #ffffff;
-  border-radius: 20rpx;
-  margin-bottom: 30rpx;
-  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.02);
-  transition: all 0.3s;
-}
-
-/* 顶部个人资料卡片 */
-.profile-card {
-  display: flex;
-  align-items: center;
-  margin-bottom: 40rpx;
-  padding: 20rpx 10rpx;
-
-  .avatar {
-    width: 130rpx;
-    height: 130rpx;
-    border-radius: 50%;
-    background-color: #e0e0e0;
-    margin-right: 30rpx;
-    border: 4rpx solid #ffffff;
-    box-shadow: 0 4rpx 10rpx rgba(0, 0, 0, 0.05);
-  }
-
-  .info {
-    flex: 1;
-    .name {
-      font-size: 44rpx;
-      font-weight: 600;
-      color: #333333;
-      margin-bottom: 12rpx;
-      display: flex;
-      align-items: center;
-
-      .status-dot {
-        width: 16rpx;
-        height: 16rpx;
-        border-radius: 50%;
-        margin-left: 16rpx;
-
-        &.online {
-          background-color: #52c41a;
-          box-shadow: 0 0 8rpx rgba(82, 196, 26, 0.5);
-        }
-        &.offline {
-          background-color: #bfbfbf;
-        }
-      }
-    }
-    .slogan {
-      font-size: 26rpx;
-      color: #888888;
-    }
-  }
-}
-
-/* 数据统计区 */
-.stats-card {
-  display: flex;
-  justify-content: space-around;
-  padding: 30rpx 0;
-
-  .stat-item {
-    text-align: center;
-    .value {
-      font-size: 40rpx;
-      font-weight: bold;
-      color: #333333;
-      margin-bottom: 10rpx;
-    }
-    .label {
-      font-size: 24rpx;
-      color: #999999;
-    }
-  }
-}
-
-/* 列表选项卡片 */
-.list-card {
-  padding: 0 30rpx;
-
-  .list-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 32rpx 0;
-    border-bottom: 1rpx solid #f0f0f0;
-    font-size: 32rpx;
-    color: #333333;
-    background-color: transparent;
-
-    &:last-child {
-      border-bottom: none;
-    }
-
-    .left-box {
-      display: flex;
-      align-items: center;
-
-      .item-icon {
-        width: 36rpx;
-        height: 36rpx;
-        margin-right: 20rpx;
-      }
-    }
-
-    .right-box {
-      display: flex;
-      align-items: center;
-
-      .item-value {
-        color: #999999;
-        font-size: 28rpx;
-        margin-right: 16rpx;
-      }
-
-      .arrow {
-        width: 32rpx;
-        height: 32rpx;
-        opacity: 0.4;
-        margin-left: 6rpx;
-      }
-    }
-  }
-
-  /* 消除 button 原生样式 */
-  .feedback-btn {
-    margin: 0;
-    line-height: normal;
-    border-radius: 0;
-    text-align: left;
-    overflow: visible;
-
-    &::after {
-      border: none;
-    }
-  }
-}
-
-/* 底部版本和版权信息 */
-.footer {
-  text-align: center;
-  padding: 40rpx 0;
-  display: flex;
-  flex-direction: column;
-
-  .copyright {
-    color: #bbbbbb;
-    font-size: 24rpx;
-    margin-bottom: 8rpx;
-  }
-  .version {
-    color: #cccccc;
-    font-size: 22rpx;
-  }
-}
-
-/* 链接弹窗 */
-.modal-mask {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 999;
-}
-
-.modal-box {
-  width: 580rpx;
-  background-color: #ffffff;
-  border-radius: 24rpx;
-  padding: 48rpx 40rpx 36rpx;
-
-  .modal-title {
-    font-size: 34rpx;
-    font-weight: 600;
-    color: #333333;
-    text-align: center;
-    margin-bottom: 20rpx;
-  }
-
-  .modal-desc {
-    font-size: 26rpx;
-    color: #888888;
-    text-align: center;
-    line-height: 1.6;
-    margin-bottom: 32rpx;
-  }
-
-  .modal-url {
-    background-color: #f5f5f5;
-    border-radius: 12rpx;
-    padding: 20rpx 24rpx;
-    margin-bottom: 40rpx;
-    text-align: center;
-
-    text {
-      font-size: 26rpx;
-      color: #555555;
-      word-break: break-all;
-    }
-  }
-
-  .modal-actions {
-    display: flex;
-    gap: 20rpx;
-
-    .modal-btn {
-      flex: 1;
-      height: 80rpx;
-      border-radius: 40rpx;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 30rpx;
-
-      &.cancel {
-        background-color: #f0f0f0;
-        color: #666666;
-      }
-
-      &.confirm {
-        background-color: #1a1a1a;
-        color: #ffffff;
-      }
-    }
-  }
-
-  .form-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 30rpx;
-
-    .form-label {
-      width: 140rpx;
-      font-size: 28rpx;
-      color: #333333;
-    }
-
-    .form-input {
-      flex: 1;
-      height: 64rpx;
-      background-color: #f5f5f5;
-      border-radius: 12rpx;
-      padding: 0 20rpx;
-      font-size: 28rpx;
-      color: #333333;
-    }
-  }
-}
+@import "./index.scss";
 </style>
