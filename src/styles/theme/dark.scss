@@ -1,0 +1,65 @@
+// ==================== 深色模式主题变量 ====================
+
+.is-dark {
+  /* 页面级背景 */
+  --bg-page: #121212;
+  --bg-card: #1e1e1e;
+  --bg-card-end: #1c1c1c;
+  --bg-input: #2c2c2c;
+  --bg-subtle: #1a1a1a;
+  --bg-placeholder: #3a3a3a;
+  --bg-info-light: #1a2332;
+
+  /* 文字色层级 */
+  --text-black: #ffffff;
+  --text-primary: #e0e0e0;
+  --text-secondary: #b0b0b0;
+  --text-tertiary: #808080;
+  --text-meta: #777777;
+  --text-gray: #8e8d8d;
+  --text-placeholder: #666666;
+  --text-muted: #555555;
+  --text-disabled: #555555;
+  --text-weak: #444444;
+  --text-light: #3a3a3a;
+
+  /* 强调色 */
+  --color-primary: #40a9ff;
+  --color-primary-dark: #1890ff;
+  --color-primary-light: #112a45;
+  --color-primary-lighter: #0d1f33;
+
+  /* 状态色 */
+  --color-success: #52c41a;
+  --color-success-shadow: rgba(82, 196, 26, 0.4);
+  --color-disabled: #555555;
+
+  /* 交互/按钮色 */
+  --btn-primary-bg: #ffffff;
+  --btn-primary-text: #1a1a1a;
+  --btn-cancel-bg: #2c2c2c;
+  --btn-cancel-text: #a0a0a0;
+
+  /* 边框与分割线 */
+  --border-light: #333333;
+  --border-card: #2c2c2c;
+  --border-base: #333333;
+  --border-list: #2a2a2a;
+  --border-icon: #555555;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+
+  /* 遮罩与阴影 */
+  --mask-bg: rgba(0, 0, 0, 0.7);
+  --mask-loading: rgba(0, 0, 0, 0.6);
+  --shadow-card: rgba(0, 0, 0, 0.3);
+  --shadow-light: rgba(0, 0, 0, 0.2);
+  --shadow-avatar: rgba(0, 0, 0, 0.4);
+  --shadow-medium: rgba(0, 0, 0, 0.4);
+  --shadow-primary: rgba(64, 169, 255, 0.2);
+
+  /* 白色透明层 */
+  --overlay-white-subtle: rgba(255, 255, 255, 0.05);
+  --overlay-white-light: rgba(255, 255, 255, 0.1);
+  --overlay-white-medium: rgba(255, 255, 255, 0.15);
+  --overlay-white-heavy: rgba(255, 255, 255, 0.3);
+}
