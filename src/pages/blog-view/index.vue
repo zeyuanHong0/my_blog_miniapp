@@ -51,11 +51,7 @@
               : '/static/image/blog_img/menu_active.png'
           "
         />
-        <image
-          v-else
-          class="item-icon"
-          src="/static/image/blog_img/menu.png"
-        />
+        <image v-else class="item-icon" src="/static/image/blog_img/menu.png" />
 
         <view class="item-name" :class="{ active: bottomBar_activeIndex === 0 }"
           >目录</view
@@ -115,7 +111,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref, nextTick, getCurrentInstance, computed } from "vue";
+import { ref, nextTick, getCurrentInstance, computed, watch } from "vue";
 import { onLoad, onPageScroll } from "@dcloudio/uni-app";
 import dayjs from "dayjs";
 import TPopup from "@tdesign/uniapp/popup/popup.vue";
@@ -157,17 +153,18 @@ onLoad((options: any) => {
 
 const blogInfo = ref<BlogInfo | null>(null);
 const headings = ref<any[]>([]);
+const article = ref<any>(null);
 const handleGetBlogInfo = async (id: string) => {
   startLoading();
   try {
     const res = await getBlogDetail(id);
     blogInfo.value = res.data;
 
-    const article = towxml(blogInfo.value?.content, "markdown", {
-      theme: "light",
+    article.value = towxml(blogInfo.value?.content, "markdown", {
+      theme: isDark.value ? "dark" : "light",
       events: {
         tap: (e: any) => {
-          console.log(e);
+          // console.log(e);
           // 判断是不是图片,如果是图片就预览
           const { tag } = e.target.dataset.data;
           if (tag === "img") {
@@ -190,9 +187,9 @@ const handleGetBlogInfo = async (id: string) => {
     const comp = currentPage.selectComponent("#my-towxml");
     // console.log("towxml node:", article);
     // 处理目录(并且给标题添加id属性)
-    headings.value = extractHeadings(article?.children)!;
+    headings.value = extractHeadings(article.value?.children)!;
     if (comp) {
-      comp.setData({ nodes: article });
+      comp.setData({ nodes: article.value });
     }
   } catch (error) {
     console.error(error);
@@ -200,6 +197,19 @@ const handleGetBlogInfo = async (id: string) => {
     stopLoading();
   }
 };
+
+// 监听主题变化，更新文章组件的主题
+watch(
+  () => isDark.value,
+  () => {
+    const pages = getCurrentPages();
+    const currentPage: any = pages[pages.length - 1];
+    const comp = currentPage.selectComponent("#my-towxml");
+    comp.setData({
+      nodes: { ...article.value, theme: isDark.value ? "dark" : "light" },
+    });
+  },
+);
 
 const showBottomBar = ref(true);
 const bottomBar_activeIndex = ref<number | null>(null);
