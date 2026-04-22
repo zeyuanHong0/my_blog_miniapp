@@ -1,6 +1,6 @@
 <template>
   <page-meta :page-style="pageHidden ? 'overflow: hidden;' : ''" />
-  <view :class="['my-container', { 'is-dark': theme === 'dark' }]">
+  <view class="my-container" :class="{ 'is-dark': isDark }">
     <!-- 个人资料卡片 -->
     <view class="profile-card">
       <image
@@ -83,7 +83,11 @@
         <view class="left-box">
           <image
             class="item-icon"
-            src="@/static/image/common/icon_web.png"
+            :src="
+              isDark
+                ? '/static/image/common/icon_web_dark.png'
+                : '/static/image/common/icon_web.png'
+            "
             mode="aspectFit"
           />
           <text class="item-title">网页端博客</text>
@@ -105,7 +109,11 @@
         <view class="left-box">
           <image
             class="item-icon"
-            src="@/static/image/common/icon_github.png"
+            :src="
+              isDark
+                ? '/static/image/common/icon_github_dark.png'
+                : '/static/image/common/icon_github.png'
+            "
             mode="aspectFit"
           />
           <text class="item-title">GitHub</text>
@@ -233,6 +241,7 @@ const blogStatsStore = useBlogStatsStore();
 const userStore = useUserStore();
 const settingsStore = useSettingsStore();
 const { theme } = storeToRefs(settingsStore);
+const isDark = computed(() => settingsStore.theme === "dark");
 
 const pageHidden = computed(() => showLinkModal.value || showStatusModal.value);
 

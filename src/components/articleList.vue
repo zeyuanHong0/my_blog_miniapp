@@ -67,28 +67,28 @@ const toBlogInfo = (id: string) => {
   .article-card {
     padding: 32rpx;
     border-radius: 24rpx;
-    background: linear-gradient(180deg, #ffffff 0%, #fcfcfc 100%);
-    box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.04);
-    border: 2rpx solid rgba(0, 0, 0, 0.02);
+    background: linear-gradient(180deg, var(--bg-card) 0%, var(--bg-card-end) 100%);
+    box-shadow: 0 8rpx 24rpx var(--shadow-light);
+    border: 2rpx solid var(--shadow-card);
     transition: all 0.2s ease-in-out;
 
     &:active {
       transform: scale(0.98);
-      box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.02);
-      background: #f5f5f5;
+      box-shadow: 0 4rpx 12rpx var(--shadow-card);
+      background: var(--bg-input);
     }
 
     .title {
       font-size: 34rpx;
       font-weight: 600;
-      color: #1a1a1a;
+      color: var(--btn-primary-bg);
       margin-bottom: 16rpx;
       line-height: 1.5;
     }
 
     .description {
       font-size: 28rpx;
-      color: #666666;
+      color: var(--btn-cancel-text);
       line-height: 1.6;
       margin-bottom: 24rpx;
     }
@@ -106,8 +106,8 @@ const toBlogInfo = (id: string) => {
 
         .tag {
           font-size: 22rpx;
-          color: #1a1a1a;
-          background: #f0f0f0;
+          color: var(--btn-primary-bg);
+          background: var(--btn-cancel-bg);
           padding: 6rpx 16rpx;
           border-radius: 8rpx;
           font-weight: 500;
@@ -116,7 +116,7 @@ const toBlogInfo = (id: string) => {
 
       .time {
         font-size: 24rpx;
-        color: #999999;
+        color: var(--text-placeholder);
         flex-shrink: 0;
         margin-left: 20rpx;
       }

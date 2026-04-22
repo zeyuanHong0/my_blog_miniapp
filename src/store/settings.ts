@@ -10,7 +10,10 @@ const useSettingsStore = defineStore("settings", {
     isDark: (state) => state.theme === "dark",
   },
   actions: {
-    toggleTheme(theme: Theme) {
+    toggleTheme() {
+      this.theme = this.theme === "light" ? "dark" : "light";
+    },
+    setTheme(theme: Theme) {
       this.theme = theme;
     },
   },

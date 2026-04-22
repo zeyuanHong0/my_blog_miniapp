@@ -1,6 +1,6 @@
 <template>
   <page-meta :page-style="showMenuPopup ? 'overflow: hidden;' : ''" />
-  <view class="page">
+  <view class="page" :class="{ 'is-dark': isDark }">
     <Loading v-if="!show" />
     <view class="header-container">
       <!-- 标题 -->
@@ -45,12 +45,16 @@
         <image
           v-if="bottomBar_activeIndex === 0"
           class="item-icon"
-          src="@/static/image/blog_img/menu_active.png"
+          :src="
+            isDark
+              ? '/static/image/blog_img/menu_active_dark.png'
+              : '/static/image/blog_img/menu_active.png'
+          "
         />
         <image
           v-else
           class="item-icon"
-          src="@/static/image/blog_img/menu.png"
+          src="/static/image/blog_img/menu.png"
         />
 
         <view class="item-name" :class="{ active: bottomBar_activeIndex === 0 }"
@@ -74,7 +78,7 @@
     :show-overlay="false"
     z-index="1000"
   >
-    <view class="menu-container">
+    <view class="menu-container" :class="{ 'is-dark': isDark }">
       <view class="header">
         <text>{{ blogInfo?.title }}</text>
       </view>
@@ -93,7 +97,10 @@
           </view>
         </scroll-view>
         <view class="no-headings" v-else>
-          <image class="emptyImg" src="https://www.zlyhub.com/images/empty.png" />
+          <image
+            class="emptyImg"
+            src="https://www.zlyhub.com/images/empty.png"
+          />
           <text class="emptyText">暂无目录</text>
         </view>
       </view>
@@ -108,7 +115,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref, nextTick, getCurrentInstance } from "vue";
+import { ref, nextTick, getCurrentInstance, computed } from "vue";
 import { onLoad, onPageScroll } from "@dcloudio/uni-app";
 import dayjs from "dayjs";
 import TPopup from "@tdesign/uniapp/popup/popup.vue";
@@ -118,6 +125,7 @@ import { useLoading } from "@/hooks/useLoading";
 import { extractHeadings } from "@/utils";
 
 import Loading from "@/components/loading.vue";
+import useSettingsStore from "@/store/settings";
 
 const towxml = require("../../static/towxml/index");
 
@@ -134,6 +142,8 @@ interface BlogInfo {
 }
 
 const instance = getCurrentInstance();
+const settingsStore = useSettingsStore();
+const isDark = computed(() => settingsStore.theme === "dark");
 
 const { startLoading, stopLoading } = useLoading(1000);
 const show = ref(false);

@@ -1,5 +1,5 @@
 <template>
-  <view class="page">
+  <view class="page" :class="{ 'is-dark': isDark }">
     <!-- 小卡片 -->
     <view
       class="small-card"
@@ -91,6 +91,7 @@ export default {
 
 <script setup lang="ts">
 import { ref, computed } from "vue";
+import useSettingsStore from "@/store/settings";
 import {
   onLoad,
   onShow,
@@ -118,6 +119,8 @@ interface Blog {
 }
 
 const blogStatsStore = useBlogStatsStore();
+const settingsStore = useSettingsStore();
+const isDark = computed(() => settingsStore.theme === 'dark');
 
 const { showLoading, startLoading, stopLoading } = useLoading(1000);
 

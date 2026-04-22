@@ -2,7 +2,7 @@
     width: 100vw;
     height: 100vh;
     padding: 20rpx 40rpx 20rpx 40rpx;
-    background: #fafafa;
+    background: var(--bg-subtle);
 }
 
 .header-container {
@@ -11,13 +11,13 @@
     .title {
         font-size: 42rpx;
         font-weight: 600;
-        color: #1a1a1a;
+        color: var(--btn-primary-bg);
         margin-bottom: 16rpx;
         letter-spacing: 1rpx;
     }
     .desc {
         font-size: 26rpx;
-        color: #999999;
+        color: var(--text-placeholder);
     }
 }
 
@@ -29,33 +29,33 @@
     gap: 20rpx;
 
     .list-item {
-        background-color: #ffffff;
+        background-color: var(--bg-card);
         border-radius: 32rpx;
         padding: 36rpx 40rpx;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.02);
-        border: 2rpx solid rgba(0, 0, 0, 0.02);
+        box-shadow: 0 8rpx 32rpx var(--shadow-card);
+        border: 2rpx solid var(--shadow-card);
         transition:
             transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
             box-shadow 0.3s ease;
 
         &:active {
             transform: scale(0.96);
-            box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.02);
+            box-shadow: 0 4rpx 16rpx var(--shadow-card);
         }
 
         .name {
             font-size: 32rpx;
             font-weight: 600;
-            color: #1a1a1a;
+            color: var(--btn-primary-bg);
         }
 
         .count {
             font-size: 26rpx;
-            color: #999999;
-            background: #f5f5f5;
+            color: var(--text-placeholder);
+            background: var(--bg-input);
             padding: 8rpx 20rpx;
             border-radius: 40rpx;
         }
@@ -65,7 +65,7 @@
 .loading-more {
     text-align: center;
     font-size: 26rpx;
-    color: #b3b3b3;
+    color: var(--text-muted);
     padding: 30rpx 0 60rpx 0;
     letter-spacing: 2rpx;
 }

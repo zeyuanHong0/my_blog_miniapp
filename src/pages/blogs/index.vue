@@ -1,5 +1,5 @@
 <template>
-  <view class="page">
+  <view class="page" :class="{ 'is-dark': isDark }">
     <view class="banner">
       共 <text class="blogNum">{{ blogList.length }}</text> 篇文章
     </view>
@@ -18,7 +18,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { onLoad, onPullDownRefresh } from "@dcloudio/uni-app";
 
 import { getAllBlogList } from "@/api/blog";
@@ -26,8 +26,11 @@ import { useLoading } from "@/hooks/useLoading";
 
 import ArticleList from "@/components/articleList.vue";
 import Loading from "@/components/loading.vue";
+import useSettingsStore from "@/store/settings";
 
 const { showLoading, startLoading, stopLoading } = useLoading(1000);
+const settingsStore = useSettingsStore();
+const isDark = computed(() => settingsStore.theme === 'dark');
 
 const blogList = ref([]);
 

@@ -1,5 +1,5 @@
 <template>
-  <view class="page">
+  <view class="page" :class="{ 'is-dark': isDark }">
     <view class="header-container">
       <view class="title">标签 | {{ info.name }}</view>
     </view>
@@ -20,7 +20,8 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, computed } from "vue";
+import useSettingsStore from "@/store/settings";
 import { onLoad } from "@dcloudio/uni-app";
 
 import { getTagInfo } from "@/api/tag";
@@ -30,6 +31,9 @@ import Loading from "@/components/loading.vue";
 import ArticleList from "@/components/articleList.vue";
 
 const { showLoading, startLoading, stopLoading } = useLoading();
+
+const settingsStore = useSettingsStore();
+const isDark = computed(() => settingsStore.theme === 'dark');
 
 const tagId = ref<string>("");
 

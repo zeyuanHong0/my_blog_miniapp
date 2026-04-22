@@ -10,16 +10,13 @@ let wsManager: WebSocketManager | null = null;
 
 onLaunch(async () => {
   console.log("App Launch");
-  const { toggleTheme } = useSettingsStore();
-  uni.getSystemInfo({
-    success: (res: any) => {
-      // console.log("system info", res);
-      toggleTheme(res.theme);
-    },
-  });
+  const { setTheme } = useSettingsStore();
+  const sysInfo = uni.getSystemInfoSync();
+  if (sysInfo.theme) {
+    setTheme(sysInfo.theme as 'light' | 'dark');
+  }
   uni.onThemeChange((res) => {
-    // console.log("theme change", res);
-    toggleTheme(res.theme);
+    setTheme(res.theme as 'light' | 'dark');
   });
   // 获取博客相关统计数据
   const blogStatsStore = useBlogStatsStore();

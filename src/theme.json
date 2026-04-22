@@ -6,7 +6,15 @@
     "tabBarColor": "#7A7E83",
     "tabBarSelectedColor": "#000000",
     "tabBarBorderStyle": "black",
-    "tabBarBgColor": "#ffffff"
+    "tabBarBgColor": "#ffffff",
+    "tabbarHomeIcon": "/static/image/tabbar_img/home.png",
+    "tabbarHomeActiveIcon": "/static/image/tabbar_img/home_active.png",
+    "tabbarCategoryIcon": "/static/image/tabbar_img/category.png",
+    "tabbarCategoryActiveIcon": "/static/image/tabbar_img/category_active.png",
+    "tabbarTagIcon": "/static/image/tabbar_img/tag.png",
+    "tabbarTagActiveIcon": "/static/image/tabbar_img/tag_active.png",
+    "tabbarMyIcon": "/static/image/tabbar_img/my.png",
+    "tabbarMyActiveIcon": "/static/image/tabbar_img/my_active.png"
   },
   "dark": {
     "navBgColor": "#292929",
@@ -15,6 +23,14 @@
     "tabBarColor": "#7A7E83",
     "tabBarSelectedColor": "#ffffff",
     "tabBarBorderStyle": "white",
-    "tabBarBgColor": "#000000"
+    "tabBarBgColor": "#000000",
+    "tabbarHomeIcon": "/static/image/tabbar_img/home_dark.png",
+    "tabbarHomeActiveIcon": "/static/image/tabbar_img/home_active_dark.png",
+    "tabbarCategoryIcon": "/static/image/tabbar_img/category_dark.png",
+    "tabbarCategoryActiveIcon": "/static/image/tabbar_img/category_active_dark.png",
+    "tabbarTagIcon": "/static/image/tabbar_img/tag_dark.png",
+    "tabbarTagActiveIcon": "/static/image/tabbar_img/tag_active_dark.png",
+    "tabbarMyIcon": "/static/image/tabbar_img/my_dark.png",
+    "tabbarMyActiveIcon": "/static/image/tabbar_img/my_active_dark.png"
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <view class="page">
+  <view class="page" :class="{ 'is-dark': isDark }">
     <view class="header-container">
       <view class="title">全部分类</view>
       <view class="desc"
@@ -33,6 +33,7 @@ export default {
 import { ref, computed } from "vue";
 import { onShow, onTabItemTap } from "@dcloudio/uni-app";
 
+import useSettingsStore from "@/store/settings";
 import { getAllCategories } from "@/api/category";
 import { useLoading } from "@/hooks/useLoading";
 import { vibratePhone } from "@/utils";
@@ -46,6 +47,9 @@ interface Category {
 }
 
 const { showLoading, startLoading, stopLoading } = useLoading();
+
+const settingsStore = useSettingsStore();
+const isDark = computed(() => settingsStore.theme === 'dark');
 
 onTabItemTap(() => {
   vibratePhone();

@@ -1,5 +1,5 @@
 <template>
-  <view class="container">
+  <view class="container" :class="{ 'is-dark': isDark }">
     <Loading v-if="showLoading" />
     <view v-else class="bento-container">
       <!-- 英雄卡片 (Top 1) -->
@@ -100,6 +100,7 @@ export default {
 import { ref, computed } from "vue";
 import { onTabItemTap, onShow } from "@dcloudio/uni-app";
 
+import useSettingsStore from "@/store/settings";
 import { getAllTags } from "@/api/tag";
 import { vibratePhone, formatSvgIcon } from "@/utils/index";
 import { useLoading } from "@/hooks/useLoading";
@@ -107,6 +108,9 @@ import { useLoading } from "@/hooks/useLoading";
 import Loading from "@/components/loading.vue";
 
 const { showLoading, startLoading, stopLoading } = useLoading(1000);
+
+const settingsStore = useSettingsStore();
+const isDark = computed(() => settingsStore.theme === 'dark');
 
 interface Tag {
   id: string;
