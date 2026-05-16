@@ -5,7 +5,8 @@
       "path": "pages/home/index",
       "style": {
         "navigationBarTitleText": "首页",
-        "enablePullDownRefresh": true
+        "enablePullDownRefresh": true,
+        "enableShareAppMessage": true
       }
     },
     {
@@ -49,6 +50,7 @@
       "path": "pages/blog-view/index",
       "style": {
         "navigationBarTitleText": "博客详情",
+        "enableShareAppMessage": true,
         "mp-weixin": {
           "usingComponents": {
             "towxml": "/static/towxml/towxml"

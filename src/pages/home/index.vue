@@ -98,6 +98,7 @@ import {
   onPageScroll,
   onPullDownRefresh,
   onTabItemTap,
+  onShareAppMessage,
 } from "@dcloudio/uni-app";
 import dayjs from "dayjs";
 
@@ -120,7 +121,7 @@ interface Blog {
 
 const blogStatsStore = useBlogStatsStore();
 const settingsStore = useSettingsStore();
-const isDark = computed(() => settingsStore.theme === 'dark');
+const isDark = computed(() => settingsStore.theme === "dark");
 
 const { showLoading, startLoading, stopLoading } = useLoading(1000);
 
@@ -217,6 +218,12 @@ const toBlogList = () => {
     url: "/pages/blogs/index",
   });
 };
+
+// 分享
+onShareAppMessage(() => ({
+  title: "哲理源",
+  path: "/pages/home/index",
+}));
 </script>
 
 <style lang="scss" scoped>

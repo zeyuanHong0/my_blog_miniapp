@@ -112,7 +112,7 @@ export default {
 
 <script setup lang="ts">
 import { ref, nextTick, getCurrentInstance, computed, watch } from "vue";
-import { onLoad, onPageScroll } from "@dcloudio/uni-app";
+import { onLoad, onPageScroll, onShareAppMessage } from "@dcloudio/uni-app";
 import dayjs from "dayjs";
 import TPopup from "@tdesign/uniapp/popup/popup.vue";
 
@@ -150,6 +150,12 @@ onLoad((options: any) => {
     handleGetBlogInfo(id as string);
   }
 });
+
+// 分享
+onShareAppMessage(() => ({
+  title: blogInfo.value?.title || "哲理源",
+  path: `/pages/blog-view/index?id=${blogInfo.value?.id}`,
+}));
 
 const blogInfo = ref<BlogInfo | null>(null);
 const headings = ref<any[]>([]);
