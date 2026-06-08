@@ -39,13 +39,13 @@
 ### 环境要求
 
 - Node.js v22.21.0（推荐使用 nvm 管理版本）
-- 微信开发者工具（AppID: `wxdc153fdb84ba745b`）
+- 微信开发者工具
 
 ### 安装步骤
 
 ```bash
 # 克隆项目
-git clone <repository-url>
+git clone https://github.com/zeyuanHong0/my_blog_miniapp.git
 
 # 安装依赖
 npm install
