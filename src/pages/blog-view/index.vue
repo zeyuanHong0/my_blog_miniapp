@@ -19,8 +19,15 @@
       </view>
       <!-- ai总结 -->
       <view class="ai-summary" v-if="blogInfo?.aiSummary">
-        <view class="summary-title"><text class="emoji">✨</text>AI总结：</view>
-        <view class="summary-content">{{ blogInfo?.aiSummary }}</view>
+        <t-collapse :value="activeValues" @change="handleChange">
+          <t-collapse-panel :value="0" expand-icon>
+            <!-- @vue-ignore -->
+            <template #header>
+              <view class="summary-title"><text class="emoji">✨</text>AI总结</view>
+            </template>
+            <view class="summary-content">{{ blogInfo?.aiSummary }}</view>
+          </t-collapse-panel>
+        </t-collapse>
       </view>
     </view>
 
@@ -115,6 +122,8 @@ import { ref, nextTick, getCurrentInstance, computed, watch } from "vue";
 import { onLoad, onPageScroll, onShareAppMessage } from "@dcloudio/uni-app";
 import dayjs from "dayjs";
 import TPopup from "@tdesign/uniapp/popup/popup.vue";
+import TCollapse from "@tdesign/uniapp/collapse/collapse.vue";
+import TCollapsePanel from "@tdesign/uniapp/collapse-panel/collapse-panel.vue";
 
 import { getBlogDetail } from "@/api/blog";
 import { useLoading } from "@/hooks/useLoading";
@@ -140,6 +149,11 @@ interface BlogInfo {
 const instance = getCurrentInstance();
 const settingsStore = useSettingsStore();
 const isDark = computed(() => settingsStore.theme === "dark");
+
+const activeValues = ref([]);
+const handleChange = (e: any) => {
+  activeValues.value = e.value;
+};
 
 const { startLoading, stopLoading } = useLoading(1000);
 const show = ref(false);

@@ -27,19 +27,49 @@
 }
 
 .ai-summary {
-    padding-left: 20rpx;
-    font-size: 28rpx;
-    font-style: italic;
-    color: var(--text-gray);
-    line-height: 1.7;
-    border-left: 4rpx solid var(--border-base);
+    margin: 40rpx 0 30rpx;
+    border-radius: 12rpx;
+    overflow: hidden;
+    border: 2rpx solid var(--border-base);
+
+    :deep(.t-collapse) {
+        &::before,
+        &::after {
+            display: none;
+        }
+    }
+
+    :deep(.t-collapse-panel__header) {
+        padding: 24rpx 16rpx;
+        &::after {
+            border-bottom: none;
+        }
+    }
+
+    :deep(.t-collapse-panel__content) {
+        padding: 0 30rpx 30rpx 30rpx;
+    }
 
     .summary-title {
-        margin-bottom: 10rpx;
+        font-size: 30rpx;
+        font-weight: 500;
+        font-style: italic;
+        color: var(--text-primary);
+        display: flex;
+        align-items: center;
 
         .emoji {
-            margin-right: 10rpx;
+            margin-right: 12rpx;
+            font-size: 32rpx;
         }
+    }
+
+    .summary-content {
+        font-size: 28rpx;
+        color: var(--text-gray);
+        line-height: 1.7;
+        font-style: italic;
+        padding: 20rpx;
     }
 }
 
