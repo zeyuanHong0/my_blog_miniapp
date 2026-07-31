@@ -127,7 +127,7 @@ import TCollapsePanel from "@tdesign/uniapp/collapse-panel/collapse-panel.vue";
 
 import { getBlogDetail } from "@/api/blog";
 import { useLoading } from "@/hooks/useLoading";
-import { extractHeadings } from "@/utils";
+import { extractHeadings, vibratePhone } from "@/utils";
 
 import Loading from "@/components/loading.vue";
 import useSettingsStore from "@/store/settings";
@@ -152,6 +152,7 @@ const isDark = computed(() => settingsStore.theme === "dark");
 
 const activeValues = ref([]);
 const handleChange = (e: any) => {
+  vibratePhone();
   activeValues.value = e.value;
 };
 
