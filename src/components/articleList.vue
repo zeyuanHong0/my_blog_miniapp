@@ -6,20 +6,27 @@
       :key="index"
       @click="toBlogInfo(blog.id)"
     >
+      <!-- 作者和日期 -->
+      <view class="meta">
+        <text class="author">{{
+          blog.author?.name ?? "无名侠"
+        }}</text>
+        <text class="divider">·</text>
+        <text class="time">{{
+          dayjs(blog.createTime).format("YYYY-MM-DD")
+        }}</text>
+      </view>
       <!-- 标题 -->
       <view class="title truncate-2">{{ blog.title }}</view>
       <!-- 描述 -->
       <view class="description truncate-2">{{ blog.description }}</view>
-      <!-- 日期和标签 -->
+      <!-- 标签 -->
       <view class="footer">
         <view class="tags">
           <view v-for="(tag, index) in blog.tags" :key="index" class="tag">{{
             tag.name
           }}</view>
         </view>
-        <view class="time">{{
-          dayjs(blog.createTime).format("YYYY-MM-DD")
-        }}</view>
       </view>
     </view>
   </div>
@@ -42,6 +49,10 @@ interface Blog {
   description: string;
   createTime: string;
   tags: any[];
+  author?: {
+    id: string;
+    name: string;
+  };
 }
 
 defineProps<{
@@ -67,7 +78,11 @@ const toBlogInfo = (id: string) => {
   .article-card {
     padding: 32rpx;
     border-radius: 24rpx;
-    background: linear-gradient(180deg, var(--bg-card) 0%, var(--bg-card-end) 100%);
+    background: linear-gradient(
+      180deg,
+      var(--bg-card) 0%,
+      var(--bg-card-end) 100%
+    );
     box-shadow: 0 8rpx 24rpx var(--shadow-light);
     border: 2rpx solid var(--shadow-card);
     transition: all 0.2s ease-in-out;
@@ -76,6 +91,23 @@ const toBlogInfo = (id: string) => {
       transform: scale(0.98);
       box-shadow: 0 4rpx 12rpx var(--shadow-card);
       background: var(--bg-input);
+    }
+
+    .meta {
+      display: flex;
+      align-items: center;
+      font-size: 24rpx;
+      color: var(--text-placeholder);
+      margin-bottom: 16rpx;
+
+      .author {
+        color: var(--btn-cancel-text);
+        font-weight: 500;
+      }
+
+      .divider {
+        margin: 0 12rpx;
+      }
     }
 
     .title {
@@ -112,13 +144,6 @@ const toBlogInfo = (id: string) => {
           border-radius: 8rpx;
           font-weight: 500;
         }
-      }
-
-      .time {
-        font-size: 24rpx;
-        color: var(--text-placeholder);
-        flex-shrink: 0;
-        margin-left: 20rpx;
       }
     }
   }
