@@ -35,16 +35,19 @@ export function uniPromise(config: RequestConfig): Promise<any> {
     if (isRefreshRequest && userStore.refresh_token) {
       token = `Bearer ${userStore.refresh_token}`;
     }
+    const header: Record<string, string> = {
+      "Content-Type": contentType,
+      "cache-control": "no-cache",
+    };
+    if (token) {
+      header.Authorization = token;
+    }
 
     uni.request({
       url: url,
       method: method,
       data: data,
-      header: {
-        "Content-Type": contentType,
-        "cache-control": "no-cache",
-        Authorization: token,
-      },
+      header,
       success(res: any) {
         // console.log(res);
         // 请求失败
